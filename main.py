@@ -1,2 +1,2 @@
-import moscowTime.displayMoscowTime3
+import moscowTime.displayMoscowTime
 
