@@ -16,7 +16,8 @@ import gui.fonts.freesans70 as large
 wri_large = Writer(ssd, large, verbose=False)
 wri_large.set_clip(False, False, False)
 
-# 296*128
+labelMoscowTimeRow = 30
+labelMoscowTimeCol = 50
 
 def connectWIFI():
     wifi = network.WLAN(network.STA_IF)
@@ -26,28 +27,24 @@ def connectWIFI():
      
 def getMoscowTime():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices").json()
-    print(data['data'][49]['price']) 
-    usdPrice = data['data'][49]['price']
-    moscowTime = str(1 / float(usdPrice)*100000000)[0:4]
-    print (moscowTime)
+    priceUSD = data['data'][49]['price']
+    moscowTime = str(100000000 / float(priceUSD))[0:4]
     return moscowTime
 
-def main():
-    connectWIFI()
+def displayInit():
     refresh(ssd, True)
     ssd.wait_until_ready()
-    print("Timer start")
     time.sleep(180)
-    print("Timer done")
     ssd._full = False
     ssd.wait_until_ready()
     refresh(ssd, True)
-    row = 30
-    col = 50
     ssd.wait_until_ready()
     ssd.sleep() #deep sleep
-    print("deep sleep")
     time.sleep(25)
+         
+def main():
+    connectWIFI()
+    displayInit()
     i = 1
     while True:
         if i > 80:
@@ -59,12 +56,11 @@ def main():
             refresh(ssd, True)
             time.sleep(25)
             
-        print("i= "+str(i))
-        print("label")
-        Label(wri_large, row, col, getMoscowTime())
+        Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
         refresh(ssd, False)
         ssd.wait_until_ready()
-        ssd.sleep() #deep sleep
+        ssd.sleep() 
         time.sleep(600)
-        i = i + 1 
+        i = i + 1
+        
 main()
