@@ -47,13 +47,15 @@ def main():
     displayInit()
     i = 1
     while True:
-        if i > 80:
+        if i > 72:
             i = 1
             ssd._full = True
+            ssd.wait_until_ready()
             refresh(ssd, True)
             ssd.wait_until_ready()
             time.sleep(180)
             ssd._full = False
+            ssd.wait_until_ready()
             refresh(ssd, True)
             time.sleep(25)
             
