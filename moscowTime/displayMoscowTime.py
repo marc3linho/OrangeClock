@@ -49,6 +49,7 @@ def main():
     while True:
         if i > 80:
             i = 1
+            ssd._full = True
             refresh(ssd, True)
             ssd.wait_until_ready()
             time.sleep(180)
