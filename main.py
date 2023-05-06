@@ -1,2 +1,2 @@
-import moscowTime.displayMoscowTime
+import orangeClockFunctions.displayMoscowTime
 

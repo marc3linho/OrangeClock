@@ -4,7 +4,7 @@ from gui.core.nanogui import refresh
 from gui.widgets.label import Label
 
 import network
-import moscowTime.secrets as secrets
+import orangeClockFunctions.secrets as secrets
 import time
 import urequests
 import json
@@ -12,12 +12,17 @@ import json
 
 # Font
 import gui.fonts.freesans70 as large
+import gui.fonts.freesans20 as small
 
 wri_large = Writer(ssd, large, verbose=False)
 wri_large.set_clip(False, False, False)
+wri_small = Writer(ssd, small, verbose=False)
+wri_small.set_clip(False, False, False)
 
 labelMoscowTimeRow = 30
 labelMoscowTimeCol = 50
+labelBlockRow = 5
+labelBlockCol = 75
 
 def connectWIFI():
     wifi = network.WLAN(network.STA_IF)
@@ -26,10 +31,18 @@ def connectWIFI():
     print(wifi.isconnected())
      
 def getMoscowTime():
-    data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices").json()
-    priceUSD = data['data'][49]['price']
+    data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
+    jsonData = data.json()
+    priceUSD = jsonData['data'][49]['price']
     moscowTime = str(100000000 / float(priceUSD))[0:4]
+    data.close()
     return moscowTime
+
+def getLastBlock():
+    data = urequests.get("https://mempool.space/api/blocks/tip/height")
+    block = data.text
+    data.close()
+    return block
 
 def displayInit():
     refresh(ssd, True)
@@ -58,7 +71,8 @@ def main():
             ssd.wait_until_ready()
             refresh(ssd, True)
             time.sleep(25)
-            
+
+        Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())      
         Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
         refresh(ssd, False)
         ssd.wait_until_ready()
