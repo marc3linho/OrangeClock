@@ -9,7 +9,6 @@ import time
 import urequests
 import json
 
-
 # Font
 import gui.fonts.freesans70 as large
 import gui.fonts.freesans20 as small
@@ -20,7 +19,7 @@ wri_small = Writer(ssd, small, verbose=False)
 wri_small.set_clip(False, False, False)
 
 labelMoscowTimeRow = 30
-labelMoscowTimeCol = 50
+labelMoscowTimeCol = 45
 labelBlockRow = 5
 labelBlockCol = 75
 

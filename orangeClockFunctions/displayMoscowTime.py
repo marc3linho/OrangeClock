@@ -9,7 +9,6 @@ import time
 import urequests
 import json
 
-
 # Font
 import gui.fonts.freesans70 as large
 
@@ -17,7 +16,7 @@ wri_large = Writer(ssd, large, verbose=False)
 wri_large.set_clip(False, False, False)
 
 labelMoscowTimeRow = 30
-labelMoscowTimeCol = 50
+labelMoscowTimeCol = 45
 
 def connectWIFI():
     wifi = network.WLAN(network.STA_IF)

@@ -8,6 +8,8 @@ SSID = "mySSID"
 
 PASSWORD = "myPassword"
 
+In main.py the displayed items of the OrangeClock can be selected (via comment out / uncomment)
+
 ## Hardware:
 
 Raspberry Pi Pico W https://www.raspberrypi.com/products/raspberry-pi-pico/

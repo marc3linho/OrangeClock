@@ -9,7 +9,6 @@ import time
 import urequests
 import json
 
-
 # Font
 import gui.fonts.freesans70 as large
 import gui.fonts.freesans20 as small
@@ -23,11 +22,11 @@ wri_tiny = Writer(ssd, tiny, verbose=False)
 wri_tiny.set_clip(False, False, False)
 
 labelMoscowTimeRow = 30
-labelMoscowTimeCol = 50
+labelMoscowTimeCol = 45
 labelBlockRow = 5
 labelBlockCol = 75
 labelFeeRow = 110
-labelFeeCol = 15
+labelFeeCol = 40
 
 def connectWIFI():
     wifi = network.WLAN(network.STA_IF)
@@ -51,9 +50,14 @@ def getLastBlock():
 
 def getMempoolFees():
     data = urequests.get("https://mempool.space/api/v1/fees/recommended")
-    block = data.text
+    jsonData = data.json()
     data.close()
-    return block
+    return jsonData
+
+def getMempoolFeesString():
+    mempoolFees = getMempoolFees()
+    mempoolFeesString = "Fees[sat/vB] L:" + str(mempoolFees["hourFee"])+" M:"+str(mempoolFees["halfHourFee"])+" H:"+str(mempoolFees["fastestFee"])
+    return mempoolFeesString
 
 def displayInit():
     refresh(ssd, True)
@@ -85,7 +89,7 @@ def main():
 
         Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())      
         Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
-        Label(wri_tiny, labelFeeRow, labelFeeCol, "L:126 sat/vB M:153 sat/vB H:165 sat/vB")
+        Label(wri_tiny, labelFeeRow, labelFeeCol, getMempoolFeesString())
         refresh(ssd, False)
         ssd.wait_until_ready()
         ssd.sleep() 
