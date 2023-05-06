@@ -1,5 +1,5 @@
 # OrangeClock
-
+![OrangeClock](https://nostr.build/i/nostr.build_c03eac661ef5d1912cfa2f339f1f0e98af5ce03d992efc4e49aa404c0fac33f5.jpg)
 It is necessary to add an secrets.py file with your wlan credentials in the orangeClockFunctions folder with the following content:
 SSID = "mySSID"
 PASSWORD = "myPassword"
