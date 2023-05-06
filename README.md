@@ -19,9 +19,13 @@ Thonny as IDE (much easier than VSCode with Pico-W-Go Extension (https://datashe
 ## Ressources:
 
 https://www.raspberrypi.org/documentation/pico/getting-started/
+
 https://github.com/waveshare/Pico_ePaper_Code
+
 https://github.com/peterhinch/micropython-nano-gui/
+
 https://github.com/peterhinch/micropython-font-to-py
+
 https://projects.raspberrypi.org/en/projects/get-started-pico-w/2
 
 ## Acknowledgement:
