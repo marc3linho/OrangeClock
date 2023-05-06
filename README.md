@@ -14,7 +14,7 @@ Waveshare 2.9" eInk Display https://www.waveshare.com/wiki/Pico-ePaper-2.9
 
 Raspberry Pi Pico W with Micropython installed (https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
 
-Thonny as IDE (much easier than VSCode with Pico-W-Go Extension (https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf)
+Thonny as IDE (much easier than VSCode with Pico-W-Go Extension (https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf))
 
 ## Ressources:
 
