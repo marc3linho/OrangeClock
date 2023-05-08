@@ -2,29 +2,31 @@
 
 <img src="https://nostr.build/i/nostr.build_c03eac661ef5d1912cfa2f339f1f0e98af5ce03d992efc4e49aa404c0fac33f5.jpg" width="50%" height="50%">
 
-It is necessary to add an secrets.py file with your wlan credentials in the orangeClockFunctions folder with the following content:
-
-SSID = "mySSID"
-
-PASSWORD = "myPassword"
-
-In main.py the displayed items of the OrangeClock can be selected (via comment out / uncomment)
-
 ## Hardware:
 
-Raspberry Pi Pico W https://www.raspberrypi.com/products/raspberry-pi-pico/
+[Raspberry Pi Pico W](https://www.raspberrypi.com/products/raspberry-pi-pico/)
 
-Waveshare 2.9" eInk Display https://www.waveshare.com/wiki/Pico-ePaper-2.9
+[Waveshare 2.9" eInk Display](https://www.waveshare.com/wiki/Pico-ePaper-2.9)
 
 4 x screws M2,5x6 for the 3D printed case
 
-## Preconditions:
+## Preconditions & Guide:
 
-Raspberry Pi Pico W with Micropython installed (https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
+1. Raspberry Pi Pico W with Micropython installed [(see guide)](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
 
-Thonny as IDE (much easier than VSCode with Pico-W-Go Extension (https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf))
+2. Install [Thonny](https://github.com/thonny/thonny/) as IDE 
+(much easier to use for beginners than VSCode with Pico-W-Go Extension (https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf)
 
-All files in src must be copied to the Pico (except for layoutExample.py and clearDisplay.py, but they also do not interfere)
+3. All files in src must be copied to the Pico (except for layoutExample.py and clearDisplay.py, but they also do not interfere)
+
+<img src="https://nostr.build/i/nostr.build_87ef17f889ba7f32c0272fabd280c4f4d9da0afbd17f07c45614e4a87be144fa.jpg" width="100%" height="100%">
+
+4. It is necessary to add an secrets.py file with your wlan credentials in the orangeClockFunctions folder with the following content:
+
+    - SSID = "mySSID"
+   - PASSWORD = "myPassword"
+
+5. In main.py the displayed items of the OrangeClock can be selected (via comment out / uncomment)
 
 ## Known bugs and strange effects
 
@@ -34,7 +36,7 @@ Strange effect: The display flickers every 12 hours (The reason is a full refres
 
 Strange effect: After switching on, it takes about 5 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
 
-## Ressources:
+## Ressources / Links:
 
 https://www.raspberrypi.org/documentation/pico/getting-started/
 
