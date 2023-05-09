@@ -6,7 +6,10 @@
 
 [Raspberry Pi Pico W](https://www.raspberrypi.com/products/raspberry-pi-pico/)
 
+2 x (1x)20 pin header for the Pico or Raspberry Pi Pico WH (H for with header assembled)
+
 [Waveshare 2.9" eInk Display](https://www.waveshare.com/wiki/Pico-ePaper-2.9)
+
 
 4 x screws M2,5x6 for the 3D printed case
 
@@ -21,7 +24,7 @@
 
 <img src="https://nostr.build/i/nostr.build_87ef17f889ba7f32c0272fabd280c4f4d9da0afbd17f07c45614e4a87be144fa.jpg" width="100%" height="100%">
 
-4. It is necessary to add an secrets.py file with your wlan credentials in the orangeClockFunctions folder with the following content:
+4. It is necessary to add an secrets.py file with your wifi credentials in the orangeClockFunctions folder with the following content:
 
     - SSID = "mySSID"
    - PASSWORD = "myPassword"
@@ -50,4 +53,4 @@ https://projects.raspberrypi.org/en/projects/get-started-pico-w/2
 
 ## Acknowledgement:
 
-Thank you gobrrr :-) (https://www.gobrrr.me/)
+Thank you [gobrrr](https://www.gobrrr.me/) for your tips on 3d printing and discussing the idea :-)
