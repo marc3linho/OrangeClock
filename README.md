@@ -6,7 +6,7 @@
 
 [Raspberry Pi Pico W](https://www.raspberrypi.com/products/raspberry-pi-pico/)
 
-2 x (1x)20 pin header for the Pico or Raspberry Pi Pico WH (H for with header assembled)
+2 x (1x)20 pin header for the Pico or Raspberry Pi Pico WH (H - with header assembled)
 
 [Waveshare 2.9" eInk Display](https://www.waveshare.com/wiki/Pico-ePaper-2.9)
 
