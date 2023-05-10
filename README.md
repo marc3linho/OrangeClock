@@ -31,6 +31,8 @@
 
 5. In main.py the displayed items of the OrangeClock can be selected (via comment out / uncomment)
 
+If you have any questions, problems or suggestions please feel free to contact me at any time via nostr: npub16cpe069rjz6pm5t42xcyhcn66f5rr04k64df3g03fk2wctlrlhsqycedcd
+
 ## Known bugs and strange effects
 
 Bug: Screen remains white when no WIFI connection is established (will be fixed in the near future)
@@ -54,3 +56,4 @@ https://projects.raspberrypi.org/en/projects/get-started-pico-w/2
 ## Acknowledgement:
 
 Thank you [gobrrr](https://www.gobrrr.me/) for your tips on 3d printing and discussing the idea :-)
+
