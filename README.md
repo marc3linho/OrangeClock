@@ -37,6 +37,10 @@ If you have any questions, problems or suggestions please feel free to contact m
 
 Bug: Screen remains white when no WIFI connection is established (will be fixed in the near future)
 
+Bug: Screen remains white when no WIFI connection is established (will be fixed in the near future)
+
+Bug: The display does not update after a while (will be fixed in the near future)
+
 Strange effect: The display flickers every 12 hours (The reason is a full refresh).
 
 Strange effect: After switching on, it takes about 5 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
