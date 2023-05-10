@@ -25,9 +25,10 @@
 <img src="https://nostr.build/i/nostr.build_87ef17f889ba7f32c0272fabd280c4f4d9da0afbd17f07c45614e4a87be144fa.jpg" width="100%" height="100%">
 
 4. It is necessary to add an secrets.py file with your wifi credentials in the orangeClockFunctions folder with the following content:
-
-    - SSID = "mySSID"
-   - PASSWORD = "myPassword"
+```python
+SSID = "mySSID"
+PASSWORD = "myPassword"
+```
 
 5. In main.py the displayed items of the OrangeClock can be selected (via comment out / uncomment)
 
