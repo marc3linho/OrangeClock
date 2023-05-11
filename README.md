@@ -48,7 +48,7 @@ Strange effect: After switching on, it takes about 5 minutes until the display s
 
 ## Ressources / Links:
 
-https://www.raspberrypi.org/documentation/pico/getting-started/
+https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html
 
 https://github.com/waveshare/Pico_ePaper_Code
 
