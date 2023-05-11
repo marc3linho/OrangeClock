@@ -9,7 +9,6 @@ import time
 import urequests
 import json
 
-# Font
 import gui.fonts.freesans70 as large
 import gui.fonts.freesans20 as small
 import gui.fonts.freesans15 as tiny
@@ -35,6 +34,7 @@ def connectWIFI():
     wifi = network.WLAN(network.STA_IF)
     wifi.active(True)
     wifi.connect(secrets.SSID, secrets.PASSWORD)
+    time.sleep(1)
     print(wifi.isconnected())
     
 def getMoscowTime():
@@ -79,14 +79,11 @@ def main():
     i = 1
     
     connectWIFI()
-    
     displayInit()
     
     while True:
         if issue:
             issue = False 
-            refresh(ssd, False)
-            time.sleep(3)
         if i > 72:
             i = 1
             ssd._full = True
@@ -98,21 +95,25 @@ def main():
             ssd.wait_until_ready()
             refresh(ssd, True)
             time.sleep(25)
-            
+        if wifi.isconnected():
+            refresh(ssd, True)    
         try:
             Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())      
-        except OSError:
+        except Exception as err:
             Label(wri_small, labelBlockRow, labelBlockCol, "connection issue")
+            print('Block: Handling run-time error:', err)
             issue = True
         try:    
             Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
-        except OSError:
+        except Exception as err:
             Label(wri_small, labelMoscowTimeRow, labelMoscowTimeCol, "connection issue")
+            print('Moscow: Handling run-time error:', err)
             issue = True
         try:    
             Label(wri_tiny, labelFeeRow, labelFeeCol, getMempoolFeesString())
-        except OSError:
+        except Exception as err:
             Label(wri_tiny, labelFeeRow, labelFeeCol, "connection issue")
+            print('Fees: Handling run-time error:', err)
             issue = True
         refresh(ssd, False)
         ssd.wait_until_ready()
@@ -122,8 +123,8 @@ def main():
         else:
             wifi.disconnect()
             wifi.connect(secrets.SSID, secrets.PASSWORD)
-            time.sleep(1)
-            print("wifi:" + str(wifi.isconnected()))
+            time.sleep(60)
+            print("wifi:" + str(wifi.isconnected()))                
             
         i = i + 1
         
