@@ -65,7 +65,7 @@ def getMempoolFeesString():
 def displayInit():
     refresh(ssd, True)
     ssd.wait_until_ready()
-    time.sleep(60)
+    time.sleep(120)
     ssd._full = False
     ssd.wait_until_ready()
     refresh(ssd, True)
