@@ -86,11 +86,13 @@ def main():
             issue = False 
         if i > 72:
             i = 1
-            ssd._full = True
+            refresh(ssd, True) #awake from deep sleep 
+            time.sleep(25)
+            ssd._full = True 
             ssd.wait_until_ready()
             refresh(ssd, True)
             ssd.wait_until_ready()
-            time.sleep(180)
+            time.sleep(120)
             ssd._full = False
             ssd.wait_until_ready()
             refresh(ssd, True)
@@ -123,8 +125,7 @@ def main():
         else:
             wifi.disconnect()
             wifi.connect(secrets.SSID, secrets.PASSWORD)
-            time.sleep(60)
-            print("wifi:" + str(wifi.isconnected()))                
+            time.sleep(60)            
             
         i = i + 1
         
