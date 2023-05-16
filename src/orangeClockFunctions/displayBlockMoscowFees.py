@@ -8,7 +8,6 @@ import orangeClockFunctions.secrets as secrets
 import time
 import urequests
 import json
-
 import gui.fonts.freesans70 as large
 import gui.fonts.freesans20 as small
 import gui.fonts.freesans15 as tiny
@@ -29,21 +28,22 @@ labelFeeCol = 40
 
 
 def connectWIFI():
-
     global wifi
     wifi = network.WLAN(network.STA_IF)
     wifi.active(True)
     wifi.connect(secrets.SSID, secrets.PASSWORD)
     time.sleep(1)
     print(wifi.isconnected())
-    
+
+
 def getMoscowTime():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
     jsonData = data.json()
-    priceUSD = jsonData['data'][49]['price']
+    priceUSD = jsonData["data"][49]["price"]
     moscowTime = str(100000000 / float(priceUSD))[0:4]
     data.close()
     return moscowTime
+
 
 def getLastBlock():
     data = urequests.get("https://mempool.space/api/blocks/tip/height")
@@ -51,16 +51,26 @@ def getLastBlock():
     data.close()
     return block
 
+
 def getMempoolFees():
     data = urequests.get("https://mempool.space/api/v1/fees/recommended")
     jsonData = data.json()
     data.close()
     return jsonData
 
+
 def getMempoolFeesString():
     mempoolFees = getMempoolFees()
-    mempoolFeesString = "Fees[sat/vB] L:" + str(mempoolFees["hourFee"])+" M:"+str(mempoolFees["halfHourFee"])+" H:"+str(mempoolFees["fastestFee"])
+    mempoolFeesString = (
+        "Fees[sat/vB] L:"
+        + str(mempoolFees["hourFee"])
+        + " M:"
+        + str(mempoolFees["halfHourFee"])
+        + " H:"
+        + str(mempoolFees["fastestFee"])
+    )
     return mempoolFeesString
+
 
 def displayInit():
     refresh(ssd, True)
@@ -70,25 +80,24 @@ def displayInit():
     ssd.wait_until_ready()
     refresh(ssd, True)
     ssd.wait_until_ready()
-    ssd.sleep() #deep sleep
+    ssd.sleep()  # deep sleep
     time.sleep(25)
-        
+
+
 def main():
     global wifi
     issue = False
     i = 1
-    
     connectWIFI()
     displayInit()
-    
     while True:
         if issue:
-            issue = False 
+            issue = False
         if i > 72:
             i = 1
-            refresh(ssd, True) #awake from deep sleep 
+            refresh(ssd, True)  # awake from deep sleep
             time.sleep(25)
-            ssd._full = True 
+            ssd._full = True
             ssd.wait_until_ready()
             refresh(ssd, True)
             ssd.wait_until_ready()
@@ -98,35 +107,36 @@ def main():
             refresh(ssd, True)
             time.sleep(25)
         if wifi.isconnected():
-            refresh(ssd, True)    
+            refresh(ssd, True)
         try:
-            Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())      
+            Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())
         except Exception as err:
             Label(wri_small, labelBlockRow, labelBlockCol, "connection issue")
-            print('Block: Handling run-time error:', err)
+            print("Block: Handling run-time error:", err)
             issue = True
-        try:    
+        try:
             Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
         except Exception as err:
             Label(wri_small, labelMoscowTimeRow, labelMoscowTimeCol, "connection issue")
-            print('Moscow: Handling run-time error:', err)
+            print("Moscow: Handling run-time error:", err)
             issue = True
-        try:    
+        try:
             Label(wri_tiny, labelFeeRow, labelFeeCol, getMempoolFeesString())
         except Exception as err:
             Label(wri_tiny, labelFeeRow, labelFeeCol, "connection issue")
-            print('Fees: Handling run-time error:', err)
+            print("Fees: Handling run-time error:", err)
             issue = True
         refresh(ssd, False)
         ssd.wait_until_ready()
-        ssd.sleep() 
+        ssd.sleep()
         if not issue:
             time.sleep(600)
         else:
             wifi.disconnect()
             wifi.connect(secrets.SSID, secrets.PASSWORD)
-            time.sleep(60)            
-            
+            time.sleep(60)
+
         i = i + 1
-        
+
+
 main()
