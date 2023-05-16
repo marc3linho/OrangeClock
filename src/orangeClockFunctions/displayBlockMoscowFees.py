@@ -9,7 +9,6 @@ import time
 import urequests
 import json
 
-# Font
 import gui.fonts.freesans70 as large
 import gui.fonts.freesans20 as small
 import gui.fonts.freesans15 as tiny
@@ -28,12 +27,16 @@ labelBlockCol = 75
 labelFeeRow = 110
 labelFeeCol = 40
 
+
 def connectWIFI():
+
+    global wifi
     wifi = network.WLAN(network.STA_IF)
     wifi.active(True)
     wifi.connect(secrets.SSID, secrets.PASSWORD)
+    time.sleep(1)
     print(wifi.isconnected())
-     
+    
 def getMoscowTime():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
     jsonData = data.json()
@@ -62,38 +65,68 @@ def getMempoolFeesString():
 def displayInit():
     refresh(ssd, True)
     ssd.wait_until_ready()
-    time.sleep(180)
+    time.sleep(120)
     ssd._full = False
     ssd.wait_until_ready()
     refresh(ssd, True)
     ssd.wait_until_ready()
     ssd.sleep() #deep sleep
     time.sleep(25)
-         
+        
 def main():
+    global wifi
+    issue = False
+    i = 1
+    
     connectWIFI()
     displayInit()
-    i = 1
+    
     while True:
+        if issue:
+            issue = False 
         if i > 72:
             i = 1
-            ssd._full = True
+            refresh(ssd, True) #awake from deep sleep 
+            time.sleep(25)
+            ssd._full = True 
             ssd.wait_until_ready()
             refresh(ssd, True)
             ssd.wait_until_ready()
-            time.sleep(180)
+            time.sleep(120)
             ssd._full = False
             ssd.wait_until_ready()
             refresh(ssd, True)
             time.sleep(25)
-
-        Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())      
-        Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
-        Label(wri_tiny, labelFeeRow, labelFeeCol, getMempoolFeesString())
+        if wifi.isconnected():
+            refresh(ssd, True)    
+        try:
+            Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())      
+        except Exception as err:
+            Label(wri_small, labelBlockRow, labelBlockCol, "connection issue")
+            print('Block: Handling run-time error:', err)
+            issue = True
+        try:    
+            Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
+        except Exception as err:
+            Label(wri_small, labelMoscowTimeRow, labelMoscowTimeCol, "connection issue")
+            print('Moscow: Handling run-time error:', err)
+            issue = True
+        try:    
+            Label(wri_tiny, labelFeeRow, labelFeeCol, getMempoolFeesString())
+        except Exception as err:
+            Label(wri_tiny, labelFeeRow, labelFeeCol, "connection issue")
+            print('Fees: Handling run-time error:', err)
+            issue = True
         refresh(ssd, False)
         ssd.wait_until_ready()
         ssd.sleep() 
-        time.sleep(600)
+        if not issue:
+            time.sleep(600)
+        else:
+            wifi.disconnect()
+            wifi.connect(secrets.SSID, secrets.PASSWORD)
+            time.sleep(60)            
+            
         i = i + 1
         
 main()
