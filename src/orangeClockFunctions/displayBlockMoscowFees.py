@@ -19,6 +19,7 @@ wri_small.set_clip(False, False, False)
 wri_tiny = Writer(ssd, tiny, verbose=False)
 wri_tiny.set_clip(False, False, False)
 
+colMaxDisplay = 296
 labelMoscowTimeRow = 30
 labelMoscowTimeCol = 45
 labelBlockRow = 5
@@ -87,6 +88,9 @@ def displayInit():
 def main():
     global wifi
     issue = False
+    blockHeight = ""
+    moscowTime = ""
+    mempoolFees = ""
     i = 1
     connectWIFI()
     displayInit()
@@ -106,26 +110,45 @@ def main():
             ssd.wait_until_ready()
             refresh(ssd, True)
             time.sleep(25)
-        if wifi.isconnected():
-            refresh(ssd, True)
         try:
-            Label(wri_small, labelBlockRow, labelBlockCol, "Block: " + getLastBlock())
+            blockHeight = "Block: " + getLastBlock()
         except Exception as err:
-            Label(wri_small, labelBlockRow, labelBlockCol, "connection issue")
+            blockHeight = "connection issue"
             print("Block: Handling run-time error:", err)
             issue = True
         try:
-            Label(wri_large, labelMoscowTimeRow, labelMoscowTimeCol, getMoscowTime())
+            moscowTime = getMoscowTime()
         except Exception as err:
-            Label(wri_small, labelMoscowTimeRow, labelMoscowTimeCol, "connection issue")
+            moscowTime = "connection issue"
             print("Moscow: Handling run-time error:", err)
             issue = True
         try:
-            Label(wri_tiny, labelFeeRow, labelFeeCol, getMempoolFeesString())
+            mempoolFees = getMempoolFeesString()
         except Exception as err:
-            Label(wri_tiny, labelFeeRow, labelFeeCol, "connection issue")
+            mempoolFees = "connection issue"
             print("Fees: Handling run-time error:", err)
             issue = True
+        if wifi.isconnected():
+            refresh(ssd, True)
+            ssd.wait_until_ready()
+        Label(
+            wri_small,
+            labelBlockRow,
+            int((colMaxDisplay - Writer.stringlen(wri_small, blockHeight)) / 2),
+            blockHeight,
+        )
+        Label(
+            wri_large,
+            labelMoscowTimeRow,
+            int((colMaxDisplay - Writer.stringlen(wri_large, moscowTime)) / 2),
+            moscowTime,
+        )
+        Label(
+            wri_tiny,
+            labelFeeRow,
+            int((colMaxDisplay - Writer.stringlen(wri_tiny, mempoolFees)) / 2),
+            mempoolFees,
+        )
         refresh(ssd, False)
         ssd.wait_until_ready()
         ssd.sleep()
