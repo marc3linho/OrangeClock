@@ -8,6 +8,8 @@
 
 2 x (1x)20 pin header for the Pico or Raspberry Pi Pico WH (H - with header assembled)
 
+* soldering is only necessary with the Pico W
+
 [Waveshare 2.9" eInk Display](https://www.waveshare.com/wiki/Pico-ePaper-2.9)
 
 
@@ -58,5 +60,5 @@ https://projects.raspberrypi.org/en/projects/get-started-pico-w/2
 
 ## Acknowledgement:
 
-Thank you [gobrrr](https://www.gobrrr.me/) for your tips on 3d printing and discussing the idea :-)
+Thank you [gobrrr](https://www.gobrrr.me/) for your help on 3d printing and discussing the idea :-)
 
