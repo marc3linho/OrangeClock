@@ -37,12 +37,16 @@ def connectWIFI():
     print(wifi.isconnected())
 
 
-def getMoscowTime():
+def getPriceUSD():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
     jsonData = data.json()
-    priceUSD = jsonData["data"][49]["price"]
-    moscowTime = str(int(100000000 / float(priceUSD)))
     data.close()
+    priceUSD = jsonData["data"][49]["price"]
+    return priceUSD
+
+
+def getMoscowTime():
+    moscowTime = str(int(100000000 / float(getPriceUSD())))
     return moscowTime
 
 
