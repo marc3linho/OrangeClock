@@ -41,7 +41,7 @@ def getMoscowTime():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
     jsonData = data.json()
     priceUSD = jsonData["data"][49]["price"]
-    moscowTime = str(100000000 / float(priceUSD))[0:4]
+    moscowTime = str(int(100000000 / float(priceUSD)))
     data.close()
     return moscowTime
 
