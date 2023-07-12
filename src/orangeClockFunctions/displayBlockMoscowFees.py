@@ -164,6 +164,3 @@ def main():
             time.sleep(60)
 
         i = i + 1
-
-
-main()
