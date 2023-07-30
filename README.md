@@ -58,6 +58,12 @@ https://github.com/peterhinch/micropython-font-to-py
 
 https://projects.raspberrypi.org/en/projects/get-started-pico-w/2
 
+https://microcontrollerslab.com/raspberry-pi-pico-w-wi-fi-manager-web-server/
+
+https://github.com/tayfunulu/WiFiManager
+
+https://github.com/cpopp/MicroPythonSamples
+
 ## Acknowledgement:
 
 Thank you [gobrrr](https://www.gobrrr.me/) for your help on 3d printing and discussing the idea :-)
