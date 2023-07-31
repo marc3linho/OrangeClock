@@ -1,1 +1,1 @@
-Print one base and two legs, then snap together.
+Print one base and two feet, then snap together.
