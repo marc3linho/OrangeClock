@@ -4,7 +4,6 @@ from gui.core.nanogui import refresh
 from gui.widgets.label import Label
 
 import network
-import orangeClockFunctions.secrets as secrets
 import time
 import urequests
 import json
@@ -26,17 +25,27 @@ labelBlockRow = 5
 labelBlockCol = 75
 labelFeeRow = 110
 labelFeeCol = 40
-
+secretsSSID = ""
+secretsPASSWORD = ""
 
 def connectWIFI():
     global wifi
+    global secretsSSID
+    global secretsPASSWORD
     wifi = network.WLAN(network.STA_IF)
     wifi.active(True)
-    wifi.connect(secrets.SSID, secrets.PASSWORD)
+    wifi.connect(secretsSSID, secretsPASSWORD)
     time.sleep(1)
     print(wifi.isconnected())
 
 
+def setSecrets(SSID, PASSWORD)
+    global secretsSSID
+    global secretsPASSWORD
+    secretsSSID = SSID
+    secretsPASSWORD = PASSWORD
+    
+    
 def getPriceUSD():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
     jsonData = data.json()
@@ -91,6 +100,8 @@ def displayInit():
 
 def main():
     global wifi
+    global secretsSSID
+    global secretsPASSWORD
     issue = False
     blockHeight = ""
     moscowTime = ""
@@ -160,7 +171,7 @@ def main():
             time.sleep(600)
         else:
             wifi.disconnect()
-            wifi.connect(secrets.SSID, secrets.PASSWORD)
+            wifi.connect(secretsSSID, secretsPASSWORD)
             time.sleep(60)
 
         i = i + 1

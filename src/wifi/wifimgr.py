@@ -82,7 +82,7 @@ def write_profiles(profiles):
     for ssid, password in profiles.items():
         lines.append("%s;%s\n" % (ssid, password))
     with open(NETWORK_PROFILES, "w") as f:
-        f.write("".join(lines))
+        f.write(lines)
 
 
 def do_connect(ssid, password):
