@@ -6,10 +6,9 @@ import machine
 import os
 import utime
 import _thread
-import urequests
 
-AP_NAME = "pi pico"
-AP_DOMAIN = "pipico.net"
+AP_NAME = "pi orange"
+AP_DOMAIN = "orange.clock"
 AP_TEMPLATE_PATH = "ap_templates"
 APP_TEMPLATE_PATH = "app_templates"
 WIFI_FILE = "wifi.json"
