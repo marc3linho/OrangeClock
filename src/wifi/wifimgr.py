@@ -2,6 +2,7 @@ import network
 import socket
 import ure
 import time
+import machine
 
 ap_ssid = "OC3401"
 ap_password = "bitcoinOnly"
@@ -25,7 +26,7 @@ def get_connection():
     connected = False
     try:
         # ESP connecting to WiFi takes time, wait a bit and try again:
-        time.sleep(3)
+        time.sleep(5)
         if wlan_sta.isconnected():
             return wlan_sta
 
@@ -68,22 +69,26 @@ def get_connection():
 
 
 def read_profiles():
-    with open(NETWORK_PROFILES) as f:
-        lines = f.readlines()
-    profiles = {}
-    for line in lines:
-        ssid, password = line.strip("\n").split(";")
+    try:
+        f = open(NETWORK_PROFILES, "r")
+        profiles = {}
+        read = f.read()
+        f.close()
+        print("Read: "+read)
+        ssid, password = read.split(";")
         profiles[ssid] = password
+        print("Read profile: "+str(list(profiles.keys())[0])+";"+str(profiles[list(profiles.keys())[0]]))
+    except OSError:
+        profiles = {}
+        print("Empty profiles")
     return profiles
 
 
 def write_profiles(profiles):
-    lines = []
-    for ssid, password in profiles.items():
-        lines.append("%s;%s\n" % (ssid, password))
-    with open(NETWORK_PROFILES, "w") as f:
-        f.write(lines)
-
+    f = open(NETWORK_PROFILES, "w")
+    print("Write: "+str(list(profiles.keys())[0])+";"+str(profiles[list(profiles.keys())[0]]))
+    f.write(str(list(profiles.keys())[0])+";"+str(profiles[list(profiles.keys())[0]]))
+    f.close()
 
 def do_connect(ssid, password):
     wlan_sta.active(True)
@@ -95,7 +100,7 @@ def do_connect(ssid, password):
         connected = wlan_sta.isconnected()
         if connected:
             break
-        time.sleep(0.1)
+        time.sleep(0.2)
         print(".", end="")
     if connected:
         print("\nConnected. Network config: ", wlan_sta.ifconfig())
@@ -303,10 +308,10 @@ def start(port=80):
     print("Listening on:", addr)
 
     while True:
-        if wlan_sta.isconnected():
-            wlan_ap.active(False)
-            return True
 
+        if wlan_sta.isconnected():
+            return True
+        
         client, addr = server_socket.accept()
         print("client connected from", addr)
         try:
@@ -354,6 +359,6 @@ def start(port=80):
                 handle_configure(client, request)
             else:
                 handle_not_found(client, url)
-
+            
         finally:
             client.close()

@@ -30,21 +30,21 @@ secretsPASSWORD = ""
 
 def connectWIFI():
     global wifi
-    global secretsSSID
-    global secretsPASSWORD
     wifi = network.WLAN(network.STA_IF)
     wifi.active(True)
     wifi.connect(secretsSSID, secretsPASSWORD)
     time.sleep(1)
     print(wifi.isconnected())
 
+def setWifiInstance(wifiInstance):
+    global wifi
+    wifi = wifiInstance
 
-def setSecrets(SSID, PASSWORD)
+def setSecrets(SSID, PASSWORD):
     global secretsSSID
     global secretsPASSWORD
     secretsSSID = SSID
     secretsPASSWORD = PASSWORD
-    
     
 def getPriceUSD():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
@@ -102,12 +102,13 @@ def main():
     global wifi
     global secretsSSID
     global secretsPASSWORD
+    print("OrangeClock: SSID:"+secretsSSID+" Password:"+secretsPASSWORD)
     issue = False
     blockHeight = ""
     moscowTime = ""
     mempoolFees = ""
     i = 1
-    connectWIFI()
+    #connectWIFI()
     displayInit()
     while True:
         if issue:
@@ -120,7 +121,7 @@ def main():
             ssd.wait_until_ready()
             refresh(ssd, True)
             ssd.wait_until_ready()
-            time.sleep(120)
+            time.sleep(120 / 2)
             ssd._full = False
             ssd.wait_until_ready()
             refresh(ssd, True)
@@ -168,7 +169,7 @@ def main():
         ssd.wait_until_ready()
         ssd.sleep()
         if not issue:
-            time.sleep(600)
+            time.sleep(600 / 10)
         else:
             wifi.disconnect()
             wifi.connect(secretsSSID, secretsPASSWORD)

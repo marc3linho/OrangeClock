@@ -1,21 +1,34 @@
 import orangeClockFunctions.displayBlockMoscowFees as orangeClock
 from wifi import wifimgr  # importing the Wi-Fi manager library
-from time import sleep
+import time
 import machine
 import gc
+import urequests
+import socket
 
-try:
-    import usocket as socket
-except:
-    import socket
 #machine.reset() #reset pi
-led = machine.Pin("LED", machine.Pin.OUT)
-wlan = wifimgr.get_connection()  # initializing wlan
+wlan = wifimgr.get_connection()  # init
 if wlan is None:
     print("Could not initialize the network connection.")
     while True:
         pass
 print("wifi-manager connected")
+try: ## checks if socket is open
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.bind(('', 80))
+    s.listen(5)
+    time.sleep(1)
 
-orangeClock.setSecrets(list(wifimgr.read_profiles().keys())[0], wifimgr.read_profiles()[list(wifimgr.read_profiles().keys())[0]])
-orangeClock.main()
+except OSError:
+    print("reset in main")
+    time.sleep(1)
+    machine.reset()
+    
+if wlan_sta.isconnected():    
+    orangeClock.setWifiInstance(wlan)
+    orangeClock.setSecrets(str(list(wifimgr.read_profiles().keys())[0]), str(wifimgr.read_profiles()[list(wifimgr.read_profiles().keys())[0]]))
+    orangeClock.main()
+else:
+    time.sleep(60)
+    machine.reset()
