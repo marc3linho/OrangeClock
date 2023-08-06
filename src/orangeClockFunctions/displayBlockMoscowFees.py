@@ -36,9 +36,6 @@ def connectWIFI():
     time.sleep(1)
     print(wifi.isconnected())
 
-def setWifiInstance(wifiInstance):
-    global wifi
-    wifi = wifiInstance
 
 def setSecrets(SSID, PASSWORD):
     global secretsSSID
@@ -108,7 +105,7 @@ def main():
     moscowTime = ""
     mempoolFees = ""
     i = 1
-    #connectWIFI()
+    connectWIFI()
     displayInit()
     while True:
         if issue:

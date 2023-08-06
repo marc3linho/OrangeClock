@@ -64,6 +64,8 @@ https://github.com/tayfunulu/WiFiManager
 
 https://github.com/cpopp/MicroPythonSamples
 
+https://github.com/simonprickett/phewap
+
 ## Acknowledgement:
 
 Thank you [gobrrr](https://www.gobrrr.me/) for your help on 3d printing and discussing the idea :-)
