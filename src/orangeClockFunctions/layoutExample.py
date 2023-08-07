@@ -22,11 +22,11 @@ labelCol2 = 45
 labelRow3 = 110
 labelCol3 = 40
 # Display 296*128
-displayLength = 296
-displayHeight = 128
-blockHeight = "Block: 788383"
-moscowTime = "3376"
-mempoolFees = "Fees[sat/vB] L:1179 M:1190 H:1102"
+displayLength = 648#296 #648
+displayHeight = 480#128 #480
+blockHeight = "Block: 802986"
+moscowTime = "3436"
+mempoolFees = "Fees[sat/vB] L:9 M:10 H:11"
 
 
 def main():
@@ -57,8 +57,9 @@ def main():
         mempoolFees
     )
     ssd.wait_until_ready()
-    refresh(ssd, False)
+    refresh(ssd)
     ssd.wait_until_ready()
+    
     ssd.sleep()
 
 
