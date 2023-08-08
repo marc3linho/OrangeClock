@@ -118,7 +118,7 @@ def main():
             ssd.wait_until_ready()
             refresh(ssd, True)
             ssd.wait_until_ready()
-            time.sleep(120 / 2)
+            time.sleep(120)
             ssd._full = False
             ssd.wait_until_ready()
             refresh(ssd, True)
@@ -166,7 +166,7 @@ def main():
         ssd.wait_until_ready()
         ssd.sleep()
         if not issue:
-            time.sleep(600 / 10)
+            time.sleep(600)
         else:
             wifi.disconnect()
             wifi.connect(secretsSSID, secretsPASSWORD)
