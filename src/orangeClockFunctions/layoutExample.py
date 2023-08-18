@@ -4,10 +4,12 @@ from gui.core.writer import Writer
 from gui.core.nanogui import refresh
 from gui.widgets.label import Label
 
+import gui.fonts.satoshiSymbol70 as satoshi
 import gui.fonts.freesans70 as large
 import gui.fonts.freesans20 as small
 import gui.fonts.freesans15 as tiny
 
+wri_satoshi = Writer(ssd, satoshi, verbose=False)
 wri_large = Writer(ssd, large, verbose=False)
 wri_large.set_clip(False, False, False)
 wri_small = Writer(ssd, small, verbose=False)
@@ -24,9 +26,10 @@ labelCol3 = 40
 # Display 296*128
 displayLength = 296
 displayHeight = 128
-blockHeight = "Block: 788383"
-moscowTime = "3376"
-mempoolFees = "Fees[sat/vB] L:1179 M:1190 H:1102"
+blockHeight = "Block: 803724"
+moscowTime = "3773"
+satoshiSymbol = "1"
+mempoolFees = "Fees[sat/vB] L:9 M:11 H:14"
 
 
 def main():
@@ -35,26 +38,43 @@ def main():
     print("Length mempoolFees: " + str(Writer.stringlen(wri_tiny, mempoolFees)))
     refresh(ssd, True)
     ssd.wait_until_ready()
-    #     Label(wri_small, labelRow1, labelCol1, blockHeight)
-    #     Label(wri_large, labelRow2, labelCol2, moscowTime)
-    #     Label(wri_tiny, labelRow3, labelCol3, mempoolFees)
     Label(
         wri_small,
         labelRow1,
         int((displayLength - Writer.stringlen(wri_small, blockHeight)) / 2),
-        blockHeight
+        blockHeight,
     )
     Label(
         wri_large,
         labelRow2,
-        int((displayLength - Writer.stringlen(wri_large, moscowTime)) / 2),
-        moscowTime
+        int(
+            (
+                displayLength
+                - Writer.stringlen(wri_large, moscowTime)
+                + Writer.stringlen(wri_satoshi, satoshiSymbol)
+            )
+            / 2
+        ),
+        moscowTime,
+    )
+    Label(
+        wri_satoshi,
+        labelRow2,
+        int(
+            (
+                displayLength
+                - Writer.stringlen(wri_satoshi, satoshiSymbol)
+                - Writer.stringlen(wri_large, moscowTime)
+            )
+            / 2
+        ),
+        satoshiSymbol,
     )
     Label(
         wri_tiny,
         labelRow3,
         int((displayLength - Writer.stringlen(wri_tiny, mempoolFees)) / 2),
-        mempoolFees
+        mempoolFees,
     )
     ssd.wait_until_ready()
     refresh(ssd, False)

@@ -11,6 +11,7 @@ import json
 import gui.fonts.freesans70 as large
 import gui.fonts.freesans20 as small
 import gui.fonts.freesans15 as tiny
+import gui.fonts.satoshiSymbol70 as satoshiLarge
 
 wri_large = Writer(ssd, large, verbose=False)
 wri_large.set_clip(False, False, False)
@@ -18,6 +19,7 @@ wri_small = Writer(ssd, small, verbose=False)
 wri_small.set_clip(False, False, False)
 wri_tiny = Writer(ssd, tiny, verbose=False)
 wri_tiny.set_clip(False, False, False)
+wri_satoshiLarge = Writer(ssd, satoshiLarge, verbose=False)
 
 colMaxDisplay = 296
 labelMoscowTimeRow = 30
@@ -99,6 +101,7 @@ def main():
     connectWIFI()
     displayInit()
     while True:
+        satoshiSymbol = "1"
         if issue:
             issue = False
         if i > 72:
@@ -124,6 +127,7 @@ def main():
             moscowTime = getMoscowTime()
         except Exception as err:
             moscowTime = "error"
+            satoshiSymbol = ""
             print("Moscow: Handling run-time error:", err)
             issue = True
         try:
@@ -144,8 +148,28 @@ def main():
         Label(
             wri_large,
             labelMoscowTimeRow,
-            int((colMaxDisplay - Writer.stringlen(wri_large, moscowTime)) / 2),
+            int(
+                (
+                    colMaxDisplay
+                    - Writer.stringlen(wri_large, moscowTime)
+                    + Writer.stringlen(wri_satoshiLarge, satoshiSymbol)
+                )
+                / 2
+            ),
             moscowTime,
+        )
+        Label(
+            wri_satoshiLarge,
+            labelMoscowTimeRow,
+            int(
+                (
+                    colMaxDisplay
+                    - Writer.stringlen(wri_satoshiLarge, satoshiSymbol)
+                    - Writer.stringlen(wri_large, moscowTime)
+                )
+                / 2
+            ),
+            satoshiSymbol,
         )
         Label(
             wri_tiny,
@@ -164,3 +188,4 @@ def main():
             time.sleep(60)
 
         i = i + 1
+
