@@ -52,6 +52,8 @@ Strange effect: After switching on, it takes about 5 minutes until the display s
 
 ## Ressources / Links:
 
+https://satsymbol.com/
+
 https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html
 
 https://github.com/waveshare/Pico_ePaper_Code
@@ -73,4 +75,3 @@ https://github.com/simonprickett/phewap
 ## Acknowledgement:
 
 Thank you [gobrrr](https://www.gobrrr.me/) for your help on 3d printing and discussing the idea :-)
-
