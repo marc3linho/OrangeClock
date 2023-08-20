@@ -1,4 +1,3 @@
-from math import pi, sin
 from color_setup import ssd
 from gui.core.writer import Writer
 from gui.core.nanogui import refresh
@@ -11,11 +10,8 @@ import gui.fonts.freesans15 as tiny
 
 wri_satoshi = Writer(ssd, satoshi, verbose=False)
 wri_large = Writer(ssd, large, verbose=False)
-wri_large.set_clip(False, False, False)
 wri_small = Writer(ssd, small, verbose=False)
-wri_small.set_clip(False, False, False)
 wri_tiny = Writer(ssd, tiny, verbose=False)
-wri_tiny.set_clip(False, False, False)
 
 labelRow1 = 5
 labelCol1 = 75
