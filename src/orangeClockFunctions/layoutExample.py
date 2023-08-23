@@ -1,4 +1,4 @@
-rom color_setup import ssd
+from color_setup import ssd
 from gui.core.writer import Writer
 from gui.core.nanogui import refresh
 from gui.widgets.label import Label
@@ -24,7 +24,7 @@ labelRow3 = 100
 displayLength = 296
 displayHeight = 128
 blockHeight = "804480" #A
-moscowTime = "383" #D
+moscowTime = "383" #E
 mempoolFees = "L:8 M:9 H:10" #C
 dollarSats = "26,000" #H        
 
