@@ -13,7 +13,6 @@ import gui.fonts.orangeClockIcons32 as iconsLarge
 import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinBold24 as small
 
-
 wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
 wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
 wri_large = Writer(ssd, large, verbose=False)
@@ -149,7 +148,7 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_small, blockHeight)
                     + Writer.stringlen(wri_iconsSmall, symbolRow1)
-                    + 4 #spacing 
+                    + 4  # spacing
                 )
                 / 2
             ),
@@ -164,7 +163,7 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsSmall, symbolRow1)
                     - Writer.stringlen(wri_small, blockHeight)
-                    - 4 #spacing
+                    - 4  # spacing
                 )
                 / 2
             ),
@@ -172,7 +171,7 @@ def main():
         )
         Label(
             wri_large,
-            labelRow2, 
+            labelRow2,
             int(
                 (
                     rowMaxDisplay
@@ -186,7 +185,7 @@ def main():
         )
         Label(
             wri_iconsLarge,
-            labelRow2 + 5, #spacing
+            labelRow2 + 5,  # spacing
             int(
                 (
                     rowMaxDisplay
@@ -238,4 +237,3 @@ def main():
             time.sleep(60)
 
         i = i + 1
-

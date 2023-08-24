@@ -23,16 +23,16 @@ labelRow3 = 100
 # Display 296*128
 displayLength = 296
 displayHeight = 128
-blockHeight = "804618" #A
-moscowTime = "3784" #E
-mempoolFees = "L:8 M:8 H:9" #C
-dollarSats = "26,000" #H        
+blockHeight = "804618"  # A
+moscowTime = "3784"  # E
+mempoolFees = "L:8 M:8 H:9"  # C
+dollarSats = "26,000"  # H
 
 
 def main():
     refresh(ssd, True)
     ssd.wait_until_ready()
-    #time.sleep(10)
+    # time.sleep(10)
     Label(
         wri_small,
         labelRow1,
@@ -42,12 +42,12 @@ def main():
                 - Writer.stringlen(wri_small, blockHeight)
                 + Writer.stringlen(wri_iconsSmall, "A")
                 + 4
-             )
-             / 2
+            )
+            / 2
         ),
         blockHeight,
     )
-    
+
     Label(
         wri_iconsSmall,
         labelRow1,
@@ -55,10 +55,10 @@ def main():
             (
                 displayLength
                 - Writer.stringlen(wri_iconsSmall, "A")
-                - Writer.stringlen(wri_small, blockHeight )
+                - Writer.stringlen(wri_small, blockHeight)
                 - 4
-             )
-             / 2
+            )
+            / 2
         ),
         "A",
     )
@@ -98,9 +98,9 @@ def main():
                 displayLength
                 - Writer.stringlen(wri_small, mempoolFees)
                 + Writer.stringlen(wri_iconsSmall, "C")
-                +4
-             )
-             / 2
+                + 4
+            )
+            / 2
         ),
         mempoolFees,
     )
@@ -112,19 +112,18 @@ def main():
                 displayLength
                 - Writer.stringlen(wri_iconsSmall, "C")
                 - Writer.stringlen(wri_small, mempoolFees)
-                -4
-             )
-             / 2
+                - 4
+            )
+            / 2
         ),
         "C",
     )
-            
+
     ssd.wait_until_ready()
     refresh(ssd, False)
     ssd.wait_until_ready()
     ssd.sleep()
     print("sleep")
 
+
 main()
-
-

@@ -5,6 +5,7 @@ from gui.core.nanogui import refresh
 
 import time
 
+
 def main():
     refresh(ssd, True)
     ssd.wait_until_ready()
@@ -12,5 +13,6 @@ def main():
     print("clear")
     ssd.sleep()
     print("sleep")
-    
+
+
 main()
