@@ -4,8 +4,8 @@ from gui.core.nanogui import refresh
 from gui.widgets.label import Label
 
 import time
-import gui.fonts.orangeClockIcons24 as iconsSmall
-import gui.fonts.orangeClockIcons44 as iconsLarge
+import gui.fonts.orangeClockIcons20 as iconsSmall
+import gui.fonts.orangeClockIcons32 as iconsLarge
 import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinBold24 as small
 
@@ -17,15 +17,15 @@ wri_small = Writer(ssd, small, verbose=False)
 
 
 labelRow1 = 5
-labelRow2 = 40
+labelRow2 = 35
 labelRow3 = 100
 
 # Display 296*128
 displayLength = 296
 displayHeight = 128
-blockHeight = "804480" #A
-moscowTime = "383" #E
-mempoolFees = "L:8 M:9 H:10" #C
+blockHeight = "804618" #A
+moscowTime = "3784" #E
+mempoolFees = "L:8 M:8 H:9" #C
 dollarSats = "26,000" #H        
 
 
@@ -41,6 +41,7 @@ def main():
                 displayLength
                 - Writer.stringlen(wri_small, blockHeight)
                 + Writer.stringlen(wri_iconsSmall, "A")
+                + 4
              )
              / 2
         ),
@@ -55,6 +56,7 @@ def main():
                 displayLength
                 - Writer.stringlen(wri_iconsSmall, "A")
                 - Writer.stringlen(wri_small, blockHeight )
+                - 4
              )
              / 2
         ),
@@ -68,6 +70,7 @@ def main():
                 displayLength
                 - Writer.stringlen(wri_large, moscowTime)
                 + Writer.stringlen(wri_iconsLarge, "E")
+                + 4
             )
             / 2
         ),
@@ -75,12 +78,13 @@ def main():
     )
     Label(
         wri_iconsLarge,
-        labelRow2,
+        labelRow2 + 5,
         int(
             (
                 displayLength
                 - Writer.stringlen(wri_iconsLarge, "E")
                 - Writer.stringlen(wri_large, moscowTime)
+                - 4
             )
             / 2
         ),
@@ -94,6 +98,7 @@ def main():
                 displayLength
                 - Writer.stringlen(wri_small, mempoolFees)
                 + Writer.stringlen(wri_iconsSmall, "C")
+                +4
              )
              / 2
         ),
@@ -107,6 +112,7 @@ def main():
                 displayLength
                 - Writer.stringlen(wri_iconsSmall, "C")
                 - Writer.stringlen(wri_small, mempoolFees)
+                -4
              )
              / 2
         ),
@@ -120,4 +126,5 @@ def main():
     print("sleep")
 
 main()
+
 
