@@ -21,7 +21,7 @@ wri_small = Writer(ssd, small, verbose=False)
 rowMaxDisplay = 296
 labelRow1 = 5
 labelRow2 = 36
-labelRow3 = 102
+labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "E"
 symbolRow3 = "C"
@@ -184,8 +184,8 @@ def main():
             moscowTime,
         )
         Label(
-            wri_iconsLarge,
-            labelRow2,
+            wri_iconsLarge, 
+            labelRow2 + 3, #+ 8 for centered satsymbol (removes + 3)
             int(
                 (
                     rowMaxDisplay
@@ -213,7 +213,7 @@ def main():
         )
         Label(
             wri_iconsSmall,
-            labelRow3 - 3, #center icon with text
+            labelRow3 + 1, #center icon with text
             int(
                 (
                     rowMaxDisplay

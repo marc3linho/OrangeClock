@@ -18,7 +18,7 @@ wri_small = Writer(ssd, small, verbose=False)
 
 labelRow1 = 5
 labelRow2 = 36
-labelRow3 = 102
+labelRow3 = 98
 
 # Display 296*128
 displayLength = 296
@@ -78,7 +78,7 @@ def main():
     )
     Label(
         wri_iconsLarge,
-        labelRow2,
+        labelRow2 + 3, #+ 8 for centered satsymbol
         int(
             (
                 displayLength
@@ -106,7 +106,7 @@ def main():
     )
     Label(
         wri_iconsSmall,
-        labelRow3 - 3,
+        labelRow3 + 1,
         int(
             (
                 displayLength
