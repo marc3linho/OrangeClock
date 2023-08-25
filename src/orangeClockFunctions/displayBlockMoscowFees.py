@@ -8,10 +8,10 @@ import orangeClockFunctions.secrets as secrets
 import time
 import urequests
 import json
-import gui.fonts.orangeClockIcons20 as iconsSmall
-import gui.fonts.orangeClockIcons32 as iconsLarge
-import gui.fonts.libreFranklinBold56 as large
-import gui.fonts.libreFranklinBold24 as small
+import gui.fonts.orangeClockIcons25 as iconsSmall
+import gui.fonts.orangeClockIcons35 as iconsLarge
+import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinSemiBold29 as small
 
 wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
 wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
@@ -20,8 +20,8 @@ wri_small = Writer(ssd, small, verbose=False)
 
 rowMaxDisplay = 296
 labelRow1 = 5
-labelRow2 = 35
-labelRow3 = 100
+labelRow2 = 36
+labelRow3 = 102
 symbolRow1 = "A"
 symbolRow2 = "E"
 symbolRow3 = "C"
@@ -157,7 +157,7 @@ def main():
 
         Label(
             wri_iconsSmall,
-            labelRow1,
+            labelRow1 + 2, #center icon with text
             int(
                 (
                     rowMaxDisplay
@@ -185,7 +185,7 @@ def main():
         )
         Label(
             wri_iconsLarge,
-            labelRow2 + 5,  # spacing
+            labelRow2,
             int(
                 (
                     rowMaxDisplay
@@ -213,7 +213,7 @@ def main():
         )
         Label(
             wri_iconsSmall,
-            labelRow3,
+            labelRow3 - 3, #center icon with text
             int(
                 (
                     rowMaxDisplay

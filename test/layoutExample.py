@@ -4,10 +4,10 @@ from gui.core.nanogui import refresh
 from gui.widgets.label import Label
 
 import time
-import gui.fonts.orangeClockIcons20 as iconsSmall
-import gui.fonts.orangeClockIcons32 as iconsLarge
-import gui.fonts.libreFranklinBold56 as large
-import gui.fonts.libreFranklinBold24 as small
+import gui.fonts.orangeClockIcons25 as iconsSmall
+import gui.fonts.orangeClockIcons35 as iconsLarge
+import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinSemiBold29 as small
 
 
 wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
@@ -17,8 +17,8 @@ wri_small = Writer(ssd, small, verbose=False)
 
 
 labelRow1 = 5
-labelRow2 = 35
-labelRow3 = 100
+labelRow2 = 36
+labelRow3 = 102
 
 # Display 296*128
 displayLength = 296
@@ -50,7 +50,7 @@ def main():
 
     Label(
         wri_iconsSmall,
-        labelRow1,
+        labelRow1 + 2,
         int(
             (
                 displayLength
@@ -78,7 +78,7 @@ def main():
     )
     Label(
         wri_iconsLarge,
-        labelRow2 + 5,
+        labelRow2,
         int(
             (
                 displayLength
@@ -106,7 +106,7 @@ def main():
     )
     Label(
         wri_iconsSmall,
-        labelRow3,
+        labelRow3 - 3,
         int(
             (
                 displayLength
