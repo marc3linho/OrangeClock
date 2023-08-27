@@ -1,6 +1,6 @@
 # OrangeClock
 
-<img src="https://nostr.build/i/nostr.build_c03eac661ef5d1912cfa2f339f1f0e98af5ce03d992efc4e49aa404c0fac33f5.jpg" width="50%" height="50%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="50%" height="50%">
 
 ## Hardware:
 
@@ -30,7 +30,7 @@
 
 3. All files in src must be copied to the Pico (except for layoutExample.py and clearDisplay.py, but they also do not interfere)
 
-<img src="https://nostr.build/i/nostr.build_87ef17f889ba7f32c0272fabd280c4f4d9da0afbd17f07c45614e4a87be144fa.jpg" width="100%" height="100%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/thonny_1.jpeg" width="100%" height="100%">
 
 4. It is necessary to add an secrets.py file with your wifi credentials in the orangeClockFunctions folder with the following content:
 	```python
@@ -44,7 +44,13 @@ If you have any questions, problems or suggestions please feel free to contact m
 
 Strange effect: The display flickers every 12 hours (The reason is a full refresh).
 
-Strange effect: After switching on, it takes about 5 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
+Strange effect: After switching on, it takes about 2 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
+
+Strange effect: After reconnecting to the WIFI network or other connection issues, the following errors are displayed: 
+
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/error_1.jpeg" width="50%" height="50%">
+
+This also happens when one of the data sources is temporarily unavailable. The update cycle is reduced to one minute until all data is available again.
 
 ## Ressources / Links:
 
@@ -62,4 +68,10 @@ https://projects.raspberrypi.org/en/projects/get-started-pico-w/2
 
 ## Acknowledgement:
 
-Thank you [gobrrr](https://www.gobrrr.me/) for your help on 3d printing and discussing the idea :-)
+Thank you for your support and cooperation in this project
+
+[Easy](https://github.com/easyuxd) 
+
+[Printer_GoBrrr](https://www.gobrrr.me/) 
+
+[SeedSigner](https://SeedSigner.com)
