@@ -177,7 +177,7 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_large, moscowTime)
                     + Writer.stringlen(wri_iconsLarge, symbolRow2)
-                    + 4
+                    + 2 # spacing
                 )
                 / 2
             ),
@@ -185,13 +185,13 @@ def main():
         )
         Label(
             wri_iconsLarge, 
-            labelRow2 + 3, #+ 8 for centered satsymbol (removes + 3)
+            labelRow2 + 7, #+ 10 for centered satsymbol
             int(
                 (
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsLarge, symbolRow2)
                     - Writer.stringlen(wri_large, moscowTime)
-                    - 4
+                    - 2 # spacing
                 )
                 / 2
             ),
@@ -205,7 +205,7 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_small, mempoolFees)
                     + Writer.stringlen(wri_iconsSmall, symbolRow3)
-                    + 4
+                    + 4 # spacing
                 )
                 / 2
             ),
@@ -219,7 +219,7 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsSmall, symbolRow3)
                     - Writer.stringlen(wri_small, mempoolFees)
-                    - 4
+                    - 4 # spacing
                 )
                 / 2
             ),

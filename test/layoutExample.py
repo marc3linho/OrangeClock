@@ -23,8 +23,8 @@ labelRow3 = 98
 # Display 296*128
 displayLength = 296
 displayHeight = 128
-blockHeight = "804618"  # A
-moscowTime = "3784"  # E
+blockHeight = "805010"  # A
+moscowTime = "3883"  # E
 mempoolFees = "L:8 M:8 H:9"  # C
 dollarSats = "26,000"  # H
 
@@ -69,8 +69,7 @@ def main():
             (
                 displayLength
                 - Writer.stringlen(wri_large, moscowTime)
-                + Writer.stringlen(wri_iconsLarge, "E")
-                + 4
+                + Writer.stringlen(wri_iconsLarge, "E")    
             )
             / 2
         ),
@@ -78,13 +77,12 @@ def main():
     )
     Label(
         wri_iconsLarge,
-        labelRow2 + 3, #+ 8 for centered satsymbol
+        labelRow2 + 7, #+ 10 for centered satsymbol
         int(
             (
                 displayLength
                 - Writer.stringlen(wri_iconsLarge, "E")
                 - Writer.stringlen(wri_large, moscowTime)
-                - 4
             )
             / 2
         ),
