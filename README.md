@@ -32,7 +32,7 @@
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/thonny_1.jpeg" width="100%" height="100%">
 
-4. It is necessary to add an secrets.py file with your wifi credentials in the orangeClockFunctions folder with the following content:
+4. It is necessary to add your wifi credentials in the secrets.py file:
 	```python
 	SSID = "mySSID"
 	PASSWORD = "myPassword"
