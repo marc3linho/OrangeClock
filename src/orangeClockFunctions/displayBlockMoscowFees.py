@@ -12,6 +12,7 @@ import gui.fonts.orangeClockIcons25 as iconsSmall
 import gui.fonts.orangeClockIcons35 as iconsLarge
 import gui.fonts.libreFranklinBold60 as large
 import gui.fonts.libreFranklinSemiBold29 as small
+import gc
 
 wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
 wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
@@ -98,6 +99,7 @@ def main():
     connectWIFI()
     displayInit()
     while True:
+        print("memory use:", gc.mem_alloc() / 1024, "KiB")
         if issue:
             issue = False
         if i > 72:
@@ -157,7 +159,7 @@ def main():
 
         Label(
             wri_iconsSmall,
-            labelRow1 + 2, #center icon with text
+            labelRow1 + 2, # center icon with text
             int(
                 (
                     rowMaxDisplay
@@ -185,7 +187,7 @@ def main():
         )
         Label(
             wri_iconsLarge, 
-            labelRow2 + 7, #+ 10 for centered satsymbol
+            labelRow2 + 7, # + 10 for centered satsymbol
             int(
                 (
                     rowMaxDisplay
@@ -213,7 +215,7 @@ def main():
         )
         Label(
             wri_iconsSmall,
-            labelRow3 + 1, #center icon with text
+            labelRow3 + 1, # center icon with text
             int(
                 (
                     rowMaxDisplay
@@ -235,5 +237,7 @@ def main():
             wifi.disconnect()
             wifi.connect(secrets.SSID, secrets.PASSWORD)
             time.sleep(60)
+            gc.collect()
 
         i = i + 1
+
