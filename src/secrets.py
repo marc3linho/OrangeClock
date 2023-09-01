@@ -1,0 +1,2 @@
+SSID = "yourSSID"
+PASSWORD = "yourPASSWORD"
