@@ -1,6 +1,6 @@
 # OrangeClock
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/add_Wifi_Manager/images/orangeclock.jpg" width="50%" height="50%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="50%" height="50%">
 
 ## Hardware:
 
@@ -28,9 +28,9 @@
 		Select MicroPython (Raspberry Pi Pico and ttyACM0 port)
 	```
 
-3. All **files** in **src** must be copied to the Pico (except for layoutExample.py and clearDisplay.py, but they also do not interfere)
+3. All files in src must be copied to the Pico (except for layoutExample.py and clearDisplay.py, but they also do not interfere)
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/add_Wifi_Manager/images/thonny.jpg" width="100%" height="100%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/thonny_1.jpeg" width="100%" height="100%">
 
 4. After restart (unplug and replug the OrangeClock) you can access the wifi-manager with your phone or computer (ssid = pi orange) and open the URI orange.clock in your browser
 
@@ -48,8 +48,13 @@ If you have any questions, problems or suggestions please feel free to contact m
 
 Strange effect: The display flickers every 12 hours (The reason is a full refresh).
 
-Strange effect: After switching on, it takes about 5 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
+Strange effect: After switching on, it takes about 2 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
 
+Strange effect: After reconnecting to the WIFI network or other connection issues, the following errors are displayed: 
+
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/error_1.jpeg" width="50%" height="50%">
+
+This also happens when one of the data sources is temporarily unavailable. The update cycle is reduced to one minute until all data is available again.
 ## Ressources / Links:
 
 https://satsymbol.com/
@@ -74,4 +79,10 @@ https://github.com/simonprickett/phewap
 
 ## Acknowledgement:
 
-Thank you [gobrrr](https://www.gobrrr.me/) for your help on 3d printing and discussing the idea :-)
+Thank you for your support and cooperation in this project
+
+[Easy](https://github.com/easyuxd) 
+
+[Printer_GoBrrr](https://www.gobrrr.me/) 
+
+[SeedSigner](https://SeedSigner.com)

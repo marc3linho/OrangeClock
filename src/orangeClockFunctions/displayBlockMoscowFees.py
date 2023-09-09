@@ -7,28 +7,25 @@ import network
 import time
 import urequests
 import json
-import gui.fonts.freesans70 as large
-import gui.fonts.freesans20 as small
-import gui.fonts.freesans15 as tiny
-import gui.fonts.satoshiSymbol70 as satoshiLarge
+import gui.fonts.orangeClockIcons25 as iconsSmall
+import gui.fonts.orangeClockIcons35 as iconsLarge
+import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinSemiBold29 as small
+import gc
 
+wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
+wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
 wri_large = Writer(ssd, large, verbose=False)
-wri_large.set_clip(False, False, False)
 wri_small = Writer(ssd, small, verbose=False)
-wri_small.set_clip(False, False, False)
-wri_tiny = Writer(ssd, tiny, verbose=False)
-wri_tiny.set_clip(False, False, False)
-wri_satoshiLarge = Writer(ssd, satoshiLarge, verbose=False)
 
-colMaxDisplay = 296
-labelMoscowTimeRow = 30
-labelMoscowTimeCol = 45
-labelBlockRow = 5
-labelBlockCol = 75
-labelFeeRow = 110
-labelFeeCol = 40
-secretsSSID = ""
-secretsPASSWORD = ""
+rowMaxDisplay = 296
+labelRow1 = 5
+labelRow2 = 36
+labelRow3 = 98
+symbolRow1 = "A"
+symbolRow2 = "E"
+symbolRow3 = "C"
+
 
 def connectWIFI():
     global wifi
@@ -45,6 +42,7 @@ def setSecrets(SSID, PASSWORD):
     secretsSSID = SSID
     secretsPASSWORD = PASSWORD
     
+
 def getPriceUSD():
     data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
     jsonData = data.json()
@@ -75,7 +73,7 @@ def getMempoolFees():
 def getMempoolFeesString():
     mempoolFees = getMempoolFees()
     mempoolFeesString = (
-        "Fees[sat/vB] L:"
+        "L:"
         + str(mempoolFees["hourFee"])
         + " M:"
         + str(mempoolFees["halfHourFee"])
@@ -88,7 +86,7 @@ def getMempoolFeesString():
 def displayInit():
     refresh(ssd, True)
     ssd.wait_until_ready()
-    time.sleep(120)
+    time.sleep(20)
     ssd._full = False
     ssd.wait_until_ready()
     refresh(ssd, True)
@@ -110,7 +108,7 @@ def main():
     connectWIFI()
     displayInit()
     while True:
-        satoshiSymbol = "1"
+        print("memory use:", gc.mem_alloc() / 1024, "KiB")
         if issue:
             issue = False
         if i > 72:
@@ -127,22 +125,27 @@ def main():
             refresh(ssd, True)
             time.sleep(25)
         try:
-            blockHeight = "Block: " + getLastBlock()
+            symbolRow1 = "A"
+            blockHeight = getLastBlock()
         except Exception as err:
             blockHeight = "connection error"
+            symbolRow1 = ""
             print("Block: Handling run-time error:", err)
             issue = True
         try:
+            symbolRow2 = "E"
             moscowTime = getMoscowTime()
         except Exception as err:
             moscowTime = "error"
-            satoshiSymbol = ""
+            symbolRow2 = ""
             print("Moscow: Handling run-time error:", err)
             issue = True
         try:
+            symbolRow3 = "C"
             mempoolFees = getMempoolFeesString()
         except Exception as err:
             mempoolFees = "connection error"
+            symbolRow3 = ""
             print("Fees: Handling run-time error:", err)
             issue = True
         if wifi.isconnected():
@@ -150,42 +153,89 @@ def main():
             ssd.wait_until_ready()
         Label(
             wri_small,
-            labelBlockRow,
-            int((colMaxDisplay - Writer.stringlen(wri_small, blockHeight)) / 2),
+            labelRow1,
+            int(
+                (
+                    rowMaxDisplay
+                    - Writer.stringlen(wri_small, blockHeight)
+                    + Writer.stringlen(wri_iconsSmall, symbolRow1)
+                    + 4  # spacing
+                )
+                / 2
+            ),
             blockHeight,
+        )
+
+        Label(
+            wri_iconsSmall,
+            labelRow1 + 2, # center icon with text
+            int(
+                (
+                    rowMaxDisplay
+                    - Writer.stringlen(wri_iconsSmall, symbolRow1)
+                    - Writer.stringlen(wri_small, blockHeight)
+                    - 4  # spacing
+                )
+                / 2
+            ),
+            symbolRow1,
         )
         Label(
             wri_large,
-            labelMoscowTimeRow,
+            labelRow2,
             int(
                 (
-                    colMaxDisplay
+                    rowMaxDisplay
                     - Writer.stringlen(wri_large, moscowTime)
-                    + Writer.stringlen(wri_satoshiLarge, satoshiSymbol)
+                    + Writer.stringlen(wri_iconsLarge, symbolRow2)
+                    + 2 # spacing
                 )
                 / 2
             ),
             moscowTime,
         )
         Label(
-            wri_satoshiLarge,
-            labelMoscowTimeRow,
+            wri_iconsLarge, 
+            labelRow2 + 7, # + 10 for centered satsymbol
             int(
                 (
-                    colMaxDisplay
-                    - Writer.stringlen(wri_satoshiLarge, satoshiSymbol)
+                    rowMaxDisplay
+                    - Writer.stringlen(wri_iconsLarge, symbolRow2)
                     - Writer.stringlen(wri_large, moscowTime)
                 )
                 / 2
             ),
-            satoshiSymbol,
+            symbolRow2,
         )
         Label(
-            wri_tiny,
-            labelFeeRow,
-            int((colMaxDisplay - Writer.stringlen(wri_tiny, mempoolFees)) / 2),
+            wri_small,
+            labelRow3,
+            int(
+                (
+                    rowMaxDisplay
+                    - Writer.stringlen(wri_small, mempoolFees)
+                    + Writer.stringlen(wri_iconsSmall, symbolRow3)
+                    + 4 # spacing
+                )
+                / 2
+            ),
             mempoolFees,
         )
+        Label(
+            wri_iconsSmall,
+            labelRow3 + 1, # center icon with text
+            int(
+                (
+                    rowMaxDisplay
+                    - Writer.stringlen(wri_iconsSmall, symbolRow3)
+                    - Writer.stringlen(wri_small, mempoolFees)
+                    - 4 # spacing
+                )
+                / 2
+            ),
+            symbolRow3,
+        )
+
         refresh(ssd, False)
         ssd.wait_until_ready()
         ssd.sleep()
@@ -195,6 +245,7 @@ def main():
             wifi.disconnect()
             wifi.connect(secretsSSID, secretsPASSWORD)
             time.sleep(60)
+            gc.collect()
 
         i = i + 1
 
