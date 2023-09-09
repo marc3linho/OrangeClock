@@ -4,6 +4,7 @@ from gui.core.nanogui import refresh
 from gui.widgets.label import Label
 
 import network
+import orangeClockFunctions.secrets as secrets
 import time
 import urequests
 import json
