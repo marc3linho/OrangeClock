@@ -25,7 +25,8 @@ labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "E"
 symbolRow3 = "C"
-
+secretsSSID = ""
+secretsPASSWORD = ""
 
 def connectWIFI():
     global wifi
@@ -86,13 +87,13 @@ def getMempoolFeesString():
 def displayInit():
     refresh(ssd, True)
     ssd.wait_until_ready()
-    time.sleep(20)
+    time.sleep(5)
     ssd._full = False
     ssd.wait_until_ready()
     refresh(ssd, True)
     ssd.wait_until_ready()
     ssd.sleep()  # deep sleep
-    time.sleep(25)
+    time.sleep(5)
 
 
 def main():
@@ -114,16 +115,16 @@ def main():
         if i > 72:
             i = 1
             refresh(ssd, True)  # awake from deep sleep
-            time.sleep(25)
+            time.sleep(5)
             ssd._full = True
             ssd.wait_until_ready()
             refresh(ssd, True)
             ssd.wait_until_ready()
-            time.sleep(120)
+            time.sleep(20)
             ssd._full = False
             ssd.wait_until_ready()
             refresh(ssd, True)
-            time.sleep(25)
+            time.sleep(5)
         try:
             symbolRow1 = "A"
             blockHeight = getLastBlock()
@@ -202,6 +203,7 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsLarge, symbolRow2)
                     - Writer.stringlen(wri_large, moscowTime)
+                    - 2 # spacing
                 )
                 / 2
             ),
@@ -243,6 +245,8 @@ def main():
             time.sleep(600)
         else:
             wifi.disconnect()
+            print("OrangeClock: SSID:"+secretsSSID+" Password:"+secretsPASSWORD)
+            print("memory use:", gc.mem_alloc() / 1024, "KiB")
             wifi.connect(secretsSSID, secretsPASSWORD)
             time.sleep(60)
             gc.collect()
