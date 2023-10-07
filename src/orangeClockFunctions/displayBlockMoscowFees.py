@@ -45,10 +45,10 @@ def setSecrets(SSID, PASSWORD):
     
 
 def getPriceUSD():
-    data = urequests.get("https://price.bisq.wiz.biz/getAllMarketPrices")
-    jsonData = data.json()
+    gc.collect()
+    data = urequests.get("https://mempool.space/api/v1/prices")
+    priceUSD = data.json()["USD"] #change USD to EUR for price in euro
     data.close()
-    priceUSD = jsonData["data"][49]["price"]
     return priceUSD
 
 
@@ -58,6 +58,7 @@ def getMoscowTime():
 
 
 def getLastBlock():
+    gc.collect()
     data = urequests.get("https://mempool.space/api/blocks/tip/height")
     block = data.text
     data.close()
@@ -65,6 +66,7 @@ def getLastBlock():
 
 
 def getMempoolFees():
+    gc.collect()
     data = urequests.get("https://mempool.space/api/v1/fees/recommended")
     jsonData = data.json()
     data.close()
@@ -97,10 +99,14 @@ def displayInit():
 
 
 def main():
+    gc.enable()
     global wifi
     global secretsSSID
     global secretsPASSWORD
-    print("OrangeClock: SSID:"+secretsSSID+" Password:"+secretsPASSWORD)
+    print("===============debug id=1===============")
+    print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+    print("memory free: ",gc.mem_free() / 1024, "KiB")
+    print("===============end=debug===============")
     issue = False
     blockHeight = ""
     moscowTime = ""
@@ -109,7 +115,10 @@ def main():
     connectWIFI()
     displayInit()
     while True:
-        print("memory use:", gc.mem_alloc() / 1024, "KiB")
+        print("===============debug id=2===============")
+        print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+        print("memory free: ",gc.mem_free() / 1024, "KiB")
+        print("===============end=debug===============")
         if issue:
             issue = False
         if i > 72:
@@ -132,6 +141,10 @@ def main():
             blockHeight = "connection error"
             symbolRow1 = ""
             print("Block: Handling run-time error:", err)
+            print("===============debug id=2.1===============")
+            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("===============end=debug===============")
             issue = True
         try:
             symbolRow2 = "E"
@@ -140,6 +153,10 @@ def main():
             moscowTime = "error"
             symbolRow2 = ""
             print("Moscow: Handling run-time error:", err)
+            print("===============debug id=2.2===============")
+            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("===============end=debug===============")
             issue = True
         try:
             symbolRow3 = "C"
@@ -148,6 +165,10 @@ def main():
             mempoolFees = "connection error"
             symbolRow3 = ""
             print("Fees: Handling run-time error:", err)
+            print("===============debug id=2.1===============")
+            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("===============end=debug===============")
             issue = True
         if wifi.isconnected():
             refresh(ssd, True)
@@ -242,14 +263,17 @@ def main():
         ssd.wait_until_ready()
         ssd.sleep()
         if not issue:
-            time.sleep(600)
+            time.sleep(600) #600 normal
         else:
             wifi.disconnect()
-            print("OrangeClock: SSID:"+secretsSSID+" Password:"+secretsPASSWORD)
-            print("memory use:", gc.mem_alloc() / 1024, "KiB")
+            print("===============debug id=3===============")
+            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("===============end=debug===============")
             wifi.connect(secretsSSID, secretsPASSWORD)
             time.sleep(60)
             gc.collect()
 
         i = i + 1
+
 
