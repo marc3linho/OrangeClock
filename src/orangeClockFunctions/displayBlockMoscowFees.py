@@ -28,6 +28,7 @@ symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
 
+
 def connectWIFI():
     global wifi
     wifi = network.WLAN(network.STA_IF)
@@ -42,12 +43,12 @@ def setSecrets(SSID, PASSWORD):
     global secretsPASSWORD
     secretsSSID = SSID
     secretsPASSWORD = PASSWORD
-    
+
 
 def getPriceUSD():
     gc.collect()
     data = urequests.get("https://mempool.space/api/v1/prices")
-    priceUSD = data.json()["USD"] #change USD to EUR for price in euro
+    priceUSD = data.json()["USD"]  # change USD to EUR for price in euro
     data.close()
     return priceUSD
 
@@ -105,7 +106,7 @@ def main():
     global secretsPASSWORD
     print("===============debug id=1===============")
     print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-    print("memory free: ",gc.mem_free() / 1024, "KiB")
+    print("memory free: ", gc.mem_free() / 1024, "KiB")
     print("===============end=debug===============")
     issue = False
     blockHeight = ""
@@ -117,7 +118,7 @@ def main():
     while True:
         print("===============debug id=2===============")
         print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-        print("memory free: ",gc.mem_free() / 1024, "KiB")
+        print("memory free: ", gc.mem_free() / 1024, "KiB")
         print("===============end=debug===============")
         if issue:
             issue = False
@@ -143,7 +144,7 @@ def main():
             print("Block: Handling run-time error:", err)
             print("===============debug id=2.1===============")
             print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("memory free: ", gc.mem_free() / 1024, "KiB")
             print("===============end=debug===============")
             issue = True
         try:
@@ -155,7 +156,7 @@ def main():
             print("Moscow: Handling run-time error:", err)
             print("===============debug id=2.2===============")
             print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("memory free: ", gc.mem_free() / 1024, "KiB")
             print("===============end=debug===============")
             issue = True
         try:
@@ -167,7 +168,7 @@ def main():
             print("Fees: Handling run-time error:", err)
             print("===============debug id=2.1===============")
             print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("memory free: ", gc.mem_free() / 1024, "KiB")
             print("===============end=debug===============")
             issue = True
         if wifi.isconnected():
@@ -190,7 +191,7 @@ def main():
 
         Label(
             wri_iconsSmall,
-            labelRow1 + 2, # center icon with text
+            labelRow1 + 2,  # center icon with text
             int(
                 (
                     rowMaxDisplay
@@ -210,21 +211,21 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_large, moscowTime)
                     + Writer.stringlen(wri_iconsLarge, symbolRow2)
-                    + 2 # spacing
+                    + 2  # spacing
                 )
                 / 2
             ),
             moscowTime,
         )
         Label(
-            wri_iconsLarge, 
-            labelRow2 + 7, # + 10 for centered satsymbol
+            wri_iconsLarge,
+            labelRow2 + 7,  # + 10 for centered satsymbol
             int(
                 (
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsLarge, symbolRow2)
                     - Writer.stringlen(wri_large, moscowTime)
-                    - 2 # spacing
+                    - 2  # spacing
                 )
                 / 2
             ),
@@ -238,7 +239,7 @@ def main():
                     rowMaxDisplay
                     - Writer.stringlen(wri_small, mempoolFees)
                     + Writer.stringlen(wri_iconsSmall, symbolRow3)
-                    + 4 # spacing
+                    + 4  # spacing
                 )
                 / 2
             ),
@@ -246,13 +247,13 @@ def main():
         )
         Label(
             wri_iconsSmall,
-            labelRow3 + 1, # center icon with text
+            labelRow3 + 1,  # center icon with text
             int(
                 (
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsSmall, symbolRow3)
                     - Writer.stringlen(wri_small, mempoolFees)
-                    - 4 # spacing
+                    - 4  # spacing
                 )
                 / 2
             ),
@@ -263,17 +264,15 @@ def main():
         ssd.wait_until_ready()
         ssd.sleep()
         if not issue:
-            time.sleep(600) #600 normal
+            time.sleep(600)  # 600 normal
         else:
             wifi.disconnect()
             print("===============debug id=3===============")
             print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ",gc.mem_free() / 1024, "KiB")
+            print("memory free: ", gc.mem_free() / 1024, "KiB")
             print("===============end=debug===============")
             wifi.connect(secretsSSID, secretsPASSWORD)
             time.sleep(60)
             gc.collect()
 
         i = i + 1
-
-
