@@ -1,6 +1,6 @@
 # OrangeClock
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="50%" height="50%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/add_Wifi_Manager/images/readme/OrangeClock_1.jpeg" width="50%" height="50%">
 
 ## Hardware:
 
@@ -30,13 +30,17 @@
 
 3. All files in src must be copied to the Pico (except for layoutExample.py and clearDisplay.py, but they also do not interfere)
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/thonny_1.jpeg" width="100%" height="100%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/add_Wifi_Manager/images/readme/thonny_1.jpeg" width="100%" height="100%">
 
-4. It is necessary to add your wifi credentials in the secrets.py file:
-	```python
-	SSID = "mySSID"
-	PASSWORD = "myPassword"
-	```
+4. After restart (unplug and replug the OrangeClock) you can access the wifi-manager with your phone or computer (ssid = pi orange) and open the URI orange.clock in your browser
+
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/add_Wifi_Manager/images/readme/wifi_1.jpg" width="50%" >
+
+5. Set your wifi credentials and save them, the OrangeClock will reboot automatically and connect to your network
+
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/add_Wifi_Manager/images/readme/wifi_2.jpg" width="50%" >
+
+6. Wait until the clock appears on the screen
 
 If you have any questions, problems or suggestions please feel free to contact me at any time via nostr: npub16cpe069rjz6pm5t42xcyhcn66f5rr04k64df3g03fk2wctlrlhsqycedcd
 
@@ -48,7 +52,7 @@ Strange effect: After switching on, it takes about 2 minutes until the display s
 
 Strange effect: After reconnecting to the WIFI network or other connection issues, the following errors are displayed: 
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/error_1.jpeg" width="50%" height="50%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/add_Wifi_Manager/images/readme/error_1.jpeg" width="50%" height="50%">
 
 This also happens when one of the data sources is temporarily unavailable. The update cycle is reduced to one minute until all data is available again.
 
@@ -65,6 +69,14 @@ https://github.com/peterhinch/micropython-nano-gui/
 https://github.com/peterhinch/micropython-font-to-py
 
 https://projects.raspberrypi.org/en/projects/get-started-pico-w/2
+
+https://microcontrollerslab.com/raspberry-pi-pico-w-wi-fi-manager-web-server/
+
+https://github.com/tayfunulu/WiFiManager
+
+https://github.com/cpopp/MicroPythonSamples
+
+https://github.com/simonprickett/phewap
 
 ## Acknowledgement:
 
