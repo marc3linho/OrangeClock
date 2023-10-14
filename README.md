@@ -17,7 +17,9 @@
 
 ## Preconditions & Guide:
 
-1. Raspberry Pi Pico W with Micropython installed [(see guide)](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html)
+1. Raspberry Pi Pico W with Micropython installed [(see guide)](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html) 
+
+	A version tested with the OrangeClock is in this repository under "firmware"
 
 2. Install [Thonny](https://github.com/thonny/thonny/) as IDE 
 (much easier to use for beginners than VSCode with Pico-W-Go Extension (https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-python-sdk.pdf)
