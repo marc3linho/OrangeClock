@@ -22,7 +22,7 @@ labelCol = 15
 displayLength = 296
 displayHeight = 128
 setupTxt = "Setup:" 
-wifiTxt = "OrangeCockWifi"  
+wifiTxt = "OrangeClockWifi"  
 urlTxt = "Url: orange.clock" 
 
 
