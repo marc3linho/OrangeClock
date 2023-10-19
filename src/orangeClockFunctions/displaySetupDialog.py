@@ -23,7 +23,7 @@ displayLength = 296
 displayHeight = 128
 setupTxt = "Setup:" 
 wifiTxt = "OrangeCockWifi"  
-urlTxt = "Url: orange.clock" 
+URITxt = "URI: orange.clock" 
 
 
 def main():
@@ -62,7 +62,7 @@ def main():
         wri_small,
         labelRow3,
         int(labelCol + Writer.stringlen(wri_iconsSmall, "D") + 4),
-        urlTxt,
+        URITxt,
     )
     
     Label(
