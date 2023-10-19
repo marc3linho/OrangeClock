@@ -1,4 +1,5 @@
 import orangeClockFunctions.displayBlockMoscowFees as orangeClock
+import orangeClockFunctions.displaySetupDialog as setupDialog
 from phew import access_point, connect_to_wifi, is_connected_to_wifi, dns, server
 from phew.template import render_template
 import json
@@ -7,7 +8,7 @@ import os
 import utime
 import _thread
 
-AP_NAME = "pi orange"
+AP_NAME = "OrangeClockWifi"
 AP_DOMAIN = "orange.clock"
 AP_TEMPLATE_PATH = "ap_templates"
 APP_TEMPLATE_PATH = "app_templates"
@@ -20,6 +21,8 @@ def machine_reset():
 
 def setup_mode():
     print("Entering setup mode...")
+    
+    setupDialog.main()
     
     def ap_index(request):
         if request.headers.get("host") != AP_DOMAIN:
@@ -102,3 +105,4 @@ except Exception:
  
 # Start the web server...
 server.run()
+
