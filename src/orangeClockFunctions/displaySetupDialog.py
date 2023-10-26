@@ -16,8 +16,8 @@ wri_small = Writer(ssd, small, verbose=False)
 
 labelRow1 = 5
 labelRow2 = 46
-labelRow3 = 77
-labelCol = 15
+labelRow3 = 85
+labelCol = 10
 
 displayLength = 296
 displayHeight = 128
