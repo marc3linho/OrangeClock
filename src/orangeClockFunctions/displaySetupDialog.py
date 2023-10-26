@@ -33,7 +33,7 @@ def main():
     Label(
         wri_small,
         labelRow1,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "F") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "G") + 4),
         setupTxt,
     )
 
@@ -41,7 +41,7 @@ def main():
         wri_iconsSmall,
         labelRow1 + 2,
         labelCol,
-        "F",
+        "G",
     )
     
     Label(

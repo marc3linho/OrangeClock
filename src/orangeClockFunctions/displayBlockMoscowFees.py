@@ -23,7 +23,7 @@ labelRow1 = 5
 labelRow2 = 36
 labelRow3 = 98
 symbolRow1 = "A"
-symbolRow2 = "E"
+symbolRow2 = "F"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
@@ -148,7 +148,7 @@ def main():
             print("===============end=debug===============")
             issue = True
         try:
-            symbolRow2 = "E"
+            symbolRow2 = "F"
             moscowTime = getMoscowTime()
         except Exception as err:
             moscowTime = "error"
