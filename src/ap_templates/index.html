@@ -5,10 +5,15 @@
         <title>OrangeClock Setup</title>
     </head>
     <body>
-        <h1 style="color: #e86223;">OrangeClock Setup</h1>
-        <p>You are connected to the OrangeClock (Raspberry Pi Pico W) setup page.</p>
-        <p>Let&apos;s configure the wifi connection:</p>
+        <h1 style="color: #e86223;">OrangeClock Setup (Version: V0.2-beta)</h1>
+        <p>Let&apos;s configure the OrangeClock:</p>
         <form action="/configure" method="POST" autocomplete="off" autocapitalize="none">
+            <input type="radio" id="mt" name="checkbox" value="mt">
+            <label for="mt">Moscow Time</label><br>
+            <input type="radio" id="mts" name="checkbox" value="mts">
+            <label for=mts">Moscow Time with Satsymbol</label><br>
+            <input type="radio" id="fp" name="checkbox" value="fp">
+            <label for="fp">Fiat Price</label><br><br>
             <label for="ssid">SSID:</label><br>
             <input type="text" id="ssid" name="ssid" style="color: #e86223;"><br>
             <label for="password">Password:</label><br>
@@ -17,3 +22,5 @@
         </form>
     </body>
 </html>
+
+

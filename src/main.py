@@ -32,7 +32,7 @@ def setup_mode():
 
     def ap_configure(request):
         print("Saving wifi credentials...")
-
+        print(request.form)
         with open(WIFI_FILE, "w") as f:
             json.dump(request.form, f)
             f.close()
@@ -59,6 +59,7 @@ def application_mode():
     print("Entering application mode.")
     onboard_led = machine.Pin("LED", machine.Pin.OUT)
     orangeClock.setSecrets(wifi_credentials["ssid"], wifi_credentials["password"])
+    orangeClock.setSelectDisplay(wifi_credentials["checkbox"])
     orangeClock.main()
 
     def app_index(request):

@@ -27,6 +27,7 @@ symbolRow2 = "F"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
+dispVersion = "mts" #mts = moscow time satsymbol / mt = without satsymbol / pr = fiat price in $
 
 
 def connectWIFI():
@@ -36,6 +37,11 @@ def connectWIFI():
     wifi.connect(secretsSSID, secretsPASSWORD)
     time.sleep(1)
     print(wifi.isconnected())
+
+
+def setSelectDisplay(displayVersion):
+    global dispVersion
+    dispVersion = displayVersion
 
 
 def setSecrets(SSID, PASSWORD):
@@ -148,8 +154,15 @@ def main():
             print("===============end=debug===============")
             issue = True
         try:
-            symbolRow2 = "F"
-            moscowTime = getMoscowTime()
+            if dispVersion == "mt":
+                symbolRow2 = ""
+                moscowTime = getMoscowTime()
+            elif dispVersion == "fp":
+                symbolRow2 = "H"
+                moscowTime = str(getPriceUSD())
+            else:
+                symbolRow2 = "F"
+                moscowTime = getMoscowTime()        
         except Exception as err:
             moscowTime = "error"
             symbolRow2 = ""
@@ -276,3 +289,4 @@ def main():
             gc.collect()
 
         i = i + 1
+
