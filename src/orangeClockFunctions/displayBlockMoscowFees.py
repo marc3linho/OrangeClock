@@ -27,7 +27,7 @@ symbolRow2 = "F"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
-dispVersion = "mts" #mts = moscow time satsymbol / mt = without satsymbol / pr = fiat price in $
+dispVersion = "mts" #mts = moscow time satsymbol / mt = without satsymbol / fp = fiat price in $
 
 
 def connectWIFI():
