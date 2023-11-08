@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OrangeClock Setup</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+<body>
+
+<div class="bg-white sm:w-full sm:max-w-sm p-4 flex-col inline-flex gap-6">
+
+    <div class="flex-col flex">
+        <h1 class="font-bold text-3xl text-ocorange">OrangeClock Setup</h1>
+        <h3 class="font-semibold text-base">v0.2-beta</h3>
+    </div>
+
+    <div class="flex-col flex gap-4 py-4">
+        <h2 class="font-bold text-3xl">Network</h2>
+
+        <div class="divide-y divide-gray-100 rounded-md border border-gray-400">
+            <div class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"></li>
+              <div class="flex w-0 flex-1 items-center">
+                <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                    <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                </div>
+                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                  <span class="truncate font-medium">SSID</span>
+                </div>
+              </div>
+              <div class="ml-4 flex-shrink-0">
+                <button type="edit" class="rounded-md bg-indigo-600 border-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 hover:border-indigo-500">Edit</button>
+              </div>
+            </div>
+        </div>
+
+        <div class="divide-y divide-gray-100 rounded-md border border-gray-400">
+            <div class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"></li>
+              <div class="flex w-0 flex-1 items-center">
+                <div class="flex-none rounded-full bg-rose-500/20 p-1">
+                    <div class="h-1.5 w-1.5 rounded-full bg-rose-500"></div>
+                </div>
+                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                  <span class="truncate font-medium">Not Connected</span>
+                </div>
+              </div>
+              <div class="ml-4 flex-shrink-0">
+                <button type="edit" class="rounded-md bg-indigo-600 border-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 hover:border-indigo-500">Connect</button>
+              </div>
+            </div>
+        </div>
+
+
+        <form action="/configure" method="POST" autocomplete="off" autocapitalize="none" class="space-y-4">
+            <div class="sm:w-full sm:max-w-sm">
+                <label for="ssid" class="block text-sm font-semibold leading-6 text-gray-900">SSID</label>
+                <div class="mt-2">
+                    <input id="ssid" name="ssid" type="text" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+
+            <div class="sm:w-full sm:max-w-sm">
+                <label for="password" class="block text-sm font-semibold leading-6 text-gray-900">Password</label>
+                <div class="mt-2">
+                    <input id="password" name="password" type="password" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full rounded-md bg-indigo-600 border-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 hover:border-indigo-500">Save</button>
+        </form>
+
+    </div>
+
+
+    <div class="flex-col flex gap-4 border-b border-gray-900/10"></div>
+
+
+    <div class="flex-col flex gap-4 py-4">
+        <h2 class="font-bold text-3xl">Design</h2>
+
+
+        <!--<h3 class="font-semibold text-xl">Preview</h3>-->
+        <span class="inline-flex items-center rounded-md bg-red-50 px-3 py-2 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/40">Preview unavailable. Connect to WiFi network.</span>
+        <img src="preview.png" />
+
+
+        <!-- <h3 class="font-semibold text-xl">Customization</h3>-->
+        <h3 class="font-semibold text-xl">Layout</h3>
+
+        <form>
+
+        <div class="tabs">
+            <input type="radio" class="tabs__radio" name="layout-select" id="layout1" checked="checked">
+            <label for="layout1" class="tabs__label flex w-1/2 items-center justify-center py-[0.4375rem] pl-2 pr-2 text-sm font-semibold lg:pr-3">Moscow Time</label>
+            <div class="tabs__content py-4">
+                <!-- LAYOUT 1 SETTINGS -->
+                <fieldset>
+                    <legend class="text-sm font-semibold leading-6 text-gray-900">Sat Icon</legend>
+                    <div class="mt-2 space-y-2">
+                      <div class="flex items-center gap-x-3">
+                        <input id="saticon-1" name="sat-icon" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" checked="checked">
+                        <label for="saticon-1" class="block text-sm font-medium leading-6 text-gray-900">satsymbol.com</label>
+                      </div>
+                      <div class="flex items-center gap-x-3">
+                        <input id="saticon-2" name="sat-icon" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="saticon-2" class="block text-sm font-medium leading-6 text-gray-900">sat/USD</label>
+                      </div>
+                      <div class="flex items-center gap-x-3">
+                        <input id="saticon-none" name="sat-icon" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="saticon-none" class="block text-sm font-medium leading-6 text-gray-900">None</label>
+                      </div>
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <input type="radio" class="tabs__radio" name="layout-select" id="layout2">
+            <label for="layout2" class="tabs__label flex w-1/2 items-center justify-center py-[0.4375rem] pl-2 pr-2 text-sm font-semibold lg:pr-3">BTC Price</label>
+            <div class="tabs__content py-4">
+                <!-- LAYOUT 2 SETTINGS -->
+                BTC PRICE - LAYOUT SETTINGS
+            </div>
+        </div>
+
+          <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button type="reset" class="w-1/2 rounded-md bg-white border-gray-400 px-3 py-2 text-sm font-semibold text-gray-800 font-semibold border hover:bg-gray-100">Reset</button>
+            <button type="submit" class="w-1/2 rounded-md bg-indigo-600 border-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 hover:border-indigo-500">Save</button>
+          </div>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
+
