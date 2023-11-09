@@ -5,10 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OrangeClock Setup</title>
     <link rel="stylesheet" href="output.css">
+    <script>
+        // Javascript Tabbing Function Start ======
+        function openLayout(evt, layoutName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("tabcontent");
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].classList.remove("tab-active");
+            var target = tablinks[i].dataset.target;
+            document.getElementById(target).classList.remove('active');
+        }
+        evt.classList.add('tab-active');
+        var target = evt.dataset.target;
+        document.getElementById(target).classList.add('active');
+        }
+        // Javascript Tabbing Function End ======
+    </script>
 </head>
 <body>
 
-<div class="bg-white sm:w-full sm:max-w-sm min-w-full p-4 flex-col inline-flex gap-6">
+<div class="bg-white w-full max-w-sm p-4 flex-col inline-flex gap-6">
 
     <div class="flex-col flex">
         <h1 class="font-bold text-3xl text-ocorange">OrangeClock Setup</h1>
@@ -89,50 +106,57 @@
 
         <form>
 
-        <div class="tabs">
-            <input type="radio" class="tabs__radio" name="layout-select" id="layout1" checked="checked">
-            <label for="layout1" class="tabs__label flex w-1/2 items-center justify-center py-[0.4375rem] pl-2 pr-2 text-sm font-semibold lg:pr-3">Moscow Time</label>
-            <div class="tabs__content py-4">
-                <!-- LAYOUT 1 SETTINGS -->
+        <div class="tab-wrap">
+            <div class="tab-head">
+                <div class="tablink tab-active" onclick="openLayout(this,'tabone')" data-target="tabone">
+                Moscow Time
+                </div>
+                <div class="tablink" onclick="openLayout(this,'tabtwo')" data-target="tabtwo">
+                BTC Price
+                </div>
+            </div>
+            
+            <div class="tab-main">
+                <div id="tabone" class="tabcontent active">
+
                 <fieldset>
                     <legend class="text-sm font-semibold leading-6 text-gray-900">Sat Icon</legend>
                     <div class="mt-2 space-y-2">
-                      <div class="flex items-center gap-x-3">
+                        <div class="flex items-center gap-x-3">
                         <input id="saticon-1" name="sat-icon" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" checked="checked">
                         <label for="saticon-1" class="block text-sm font-medium leading-6 text-gray-900">satsymbol.com</label>
-                      </div>
-                      <div class="flex items-center gap-x-3">
+                        </div>
+                        <div class="flex items-center gap-x-3">
                         <input id="saticon-2" name="sat-icon" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="saticon-2" class="block text-sm font-medium leading-6 text-gray-900">sat/USD</label>
-                      </div>
-                      <div class="flex items-center gap-x-3">
+                        </div>
+                        <div class="flex items-center gap-x-3">
                         <input id="saticon-none" name="sat-icon" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="saticon-none" class="block text-sm font-medium leading-6 text-gray-900">None</label>
-                      </div>
+                        </div>
                     </div>
                 </fieldset>
-            </div>
 
+                </div>
+                <div id="tabtwo" class="tabcontent">
 
-            <input type="radio" class="tabs__radio" name="layout-select" id="layout2">
-            <label for="layout2" class="tabs__label flex w-1/2 items-center justify-center py-[0.4375rem] pl-2 pr-2 text-sm font-semibold lg:pr-3">BTC Price</label>
-            <div class="tabs__content py-4">
-                <!-- LAYOUT 2 SETTINGS -->
                 <fieldset>
-                    <legend class="text-sm font-semibold leading-6 text-gray-900">Fiat Currency</legend>
-                    <div class="mt-2 space-y-2">
-                      <div class="flex items-center gap-x-3">
-                        <input id="usd" name="fiat-currency" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" checked="checked">
-                        <label for="usd" class="block text-sm font-medium leading-6 text-gray-900">US Dollar</label>
-                      </div>
-                      <div class="flex items-center gap-x-3">
-                        <input id="euro" name="fiat-currency" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="euro" class="block text-sm font-medium leading-6 text-gray-900">Euro</label>
-                      </div>
+                <legend class="text-sm font-semibold leading-6 text-gray-900">Fiat Currency</legend>
+                <div class="mt-2 space-y-2">
+                    <div class="flex items-center gap-x-3">
+                    <input id="usd" name="fiat-currency" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" checked="checked">
+                    <label for="usd" class="block text-sm font-medium leading-6 text-gray-900">US Dollar</label>
                     </div>
+                    <div class="flex items-center gap-x-3">
+                    <input id="euro" name="fiat-currency" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                    <label for="euro" class="block text-sm font-medium leading-6 text-gray-900">Euro</label>
+                    </div>
+                </div>
                 </fieldset>
+
+                </div>
             </div>
-        </div>
+            </div>
 
           <div class="mt-6 flex items-center justify-end gap-x-6">
             <button type="reset" class="w-1/2 rounded-md bg-white border-gray-400 px-3 py-2 text-sm font-semibold text-gray-800 font-semibold border hover:bg-gray-100">Reset</button>
@@ -142,7 +166,6 @@
         </form>
 
     </div>
-
 
 </div>
 
