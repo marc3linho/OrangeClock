@@ -27,7 +27,7 @@ symbolRow2 = "F"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
-dispVersion = "mts" #mts = moscow time satsymbol / mt = without satsymbol / fp = fiat price in $
+dispVersion = "mts" #mts = moscow time satsymbol / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
 
 
 def connectWIFI():
@@ -51,16 +51,15 @@ def setSecrets(SSID, PASSWORD):
     secretsPASSWORD = PASSWORD
 
 
-def getPriceUSD():
+def getPrice(currency): # change USD to EUR for price in euro
     gc.collect()
     data = urequests.get("https://mempool.space/api/v1/prices")
-    priceUSD = data.json()["USD"]  # change USD to EUR for price in euro
+    price = data.json()[currency]
     data.close()
-    return priceUSD
-
+    return price
 
 def getMoscowTime():
-    moscowTime = str(int(100000000 / float(getPriceUSD())))
+    moscowTime = str(int(100000000 / float(getPrice("USD"))))
     return moscowTime
 
 
@@ -157,9 +156,12 @@ def main():
             if dispVersion == "mt":
                 symbolRow2 = ""
                 moscowTime = getMoscowTime()
-            elif dispVersion == "fp":
+            elif dispVersion == "fp1":
                 symbolRow2 = "H"
-                moscowTime = str(getPriceUSD())
+                moscowTime = str(getPrice("USD"))
+            elif dispVersion == "fp2":
+                symbolRow2 = "B"
+                moscowTime = str(getPrice("EUR"))
             else:
                 symbolRow2 = "F"
                 moscowTime = getMoscowTime()        
