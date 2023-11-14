@@ -58,6 +58,7 @@ def getPrice(currency): # change USD to EUR for price in euro
     data.close()
     return price
 
+
 def getMoscowTime():
     moscowTime = str(int(100000000 / float(getPrice("USD"))))
     return moscowTime
@@ -104,27 +105,28 @@ def displayInit():
     time.sleep(5)
 
 
+def debugConsoleOutput(id):
+    print("===============debug id= " + id + "===============")
+    print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+    print("memory free: ", gc.mem_free() / 1024, "KiB")
+    print("===============end debug===============")
+
+
 def main():
     gc.enable()
     global wifi
     global secretsSSID
     global secretsPASSWORD
-    print("===============debug id=1===============")
-    print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-    print("memory free: ", gc.mem_free() / 1024, "KiB")
-    print("===============end=debug===============")
+    debugConsoleOutput("1")
     issue = False
     blockHeight = ""
-    moscowTime = ""
+    textRow2 = ""
     mempoolFees = ""
     i = 1
     connectWIFI()
     displayInit()
     while True:
-        print("===============debug id=2===============")
-        print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-        print("memory free: ", gc.mem_free() / 1024, "KiB")
-        print("===============end=debug===============")
+        debugConsoleOutput("2")
         if issue:
             issue = False
         if i > 72:
@@ -147,32 +149,26 @@ def main():
             blockHeight = "connection error"
             symbolRow1 = ""
             print("Block: Handling run-time error:", err)
-            print("===============debug id=2.1===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("3")
             issue = True
         try:
             if dispVersion == "mt":
                 symbolRow2 = ""
-                moscowTime = getMoscowTime()
+                textRow2 = getMoscowTime()
             elif dispVersion == "fp1":
                 symbolRow2 = "H"
-                moscowTime = str(getPrice("USD"))
+                textRow2 = str(getPrice("USD"))
             elif dispVersion == "fp2":
                 symbolRow2 = "B"
-                moscowTime = str(getPrice("EUR"))
+                textRow2 = str(getPrice("EUR"))
             else:
                 symbolRow2 = "F"
-                moscowTime = getMoscowTime()        
+                textRow2 = getMoscowTime()        
         except Exception as err:
-            moscowTime = "error"
+            textRow2 = "error"
             symbolRow2 = ""
             print("Moscow: Handling run-time error:", err)
-            print("===============debug id=2.2===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("4")
             issue = True
         try:
             symbolRow3 = "C"
@@ -181,10 +177,7 @@ def main():
             mempoolFees = "connection error"
             symbolRow3 = ""
             print("Fees: Handling run-time error:", err)
-            print("===============debug id=2.1===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("5")
             issue = True
         if wifi.isconnected():
             refresh(ssd, True)
@@ -224,13 +217,13 @@ def main():
             int(
                 (
                     rowMaxDisplay
-                    - Writer.stringlen(wri_large, moscowTime)
+                    - Writer.stringlen(wri_large, textRow2)
                     + Writer.stringlen(wri_iconsLarge, symbolRow2)
                     + 2  # spacing
                 )
                 / 2
             ),
-            moscowTime,
+            textRow2,
         )
         Label(
             wri_iconsLarge,
@@ -239,7 +232,7 @@ def main():
                 (
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsLarge, symbolRow2)
-                    - Writer.stringlen(wri_large, moscowTime)
+                    - Writer.stringlen(wri_large, textRow2)
                     - 2  # spacing
                 )
                 / 2
@@ -282,10 +275,7 @@ def main():
             time.sleep(600)  # 600 normal
         else:
             wifi.disconnect()
-            print("===============debug id=3===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("6")
             wifi.connect(secretsSSID, secretsPASSWORD)
             time.sleep(60)
             gc.collect()
