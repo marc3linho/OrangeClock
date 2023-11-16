@@ -23,11 +23,11 @@ labelRow1 = 5
 labelRow2 = 36
 labelRow3 = 98
 symbolRow1 = "A"
-symbolRow2 = "F"
+symbolRow2 = "G"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
-dispVersion = "mts" #mts = moscow time satsymbol / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
+dispVersion = "mts" #mts = moscow time satsymbol / #mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
 
 
 def connectWIFI():
@@ -155,14 +155,17 @@ def main():
             if dispVersion == "mt":
                 symbolRow2 = ""
                 textRow2 = getMoscowTime()
-            elif dispVersion == "fp1":
+            elif dispVersion == "mts2":
                 symbolRow2 = "H"
+                textRow2 = getMoscowTime()
+            elif dispVersion == "fp1":
+                symbolRow2 = "J"
                 textRow2 = str(getPrice("USD"))
             elif dispVersion == "fp2":
                 symbolRow2 = "B"
                 textRow2 = str(getPrice("EUR"))
             else:
-                symbolRow2 = "F"
+                symbolRow2 = "G"
                 textRow2 = getMoscowTime()        
         except Exception as err:
             textRow2 = "error"
