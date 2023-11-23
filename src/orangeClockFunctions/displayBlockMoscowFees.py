@@ -9,7 +9,7 @@ import urequests
 import json
 import gui.fonts.orangeClockIcons25 as iconsSmall
 import gui.fonts.orangeClockIcons35 as iconsLarge
-import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 import gc
 
@@ -20,7 +20,7 @@ wri_small = Writer(ssd, small, verbose=False)
 
 rowMaxDisplay = 296
 labelRow1 = 5
-labelRow2 = 36
+labelRow2 = 42
 labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "G"
@@ -230,7 +230,7 @@ def main():
         )
         Label(
             wri_iconsLarge,
-            labelRow2 + 7,  # + 10 for centered satsymbol
+            labelRow2,  # + 10 for centered satsymbol
             int(
                 (
                     rowMaxDisplay

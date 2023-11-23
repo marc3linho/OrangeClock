@@ -5,7 +5,7 @@ from gui.widgets.label import Label
 
 import time
 import gui.fonts.orangeClockIcons25 as iconsSmall
-import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 
 
