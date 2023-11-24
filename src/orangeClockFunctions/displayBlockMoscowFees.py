@@ -114,7 +114,8 @@ def main():
     mempoolFees = ""
     i = 1
     connectWIFI()
-    displayInit()
+    # displayInit()
+    initial_boot = True  # Flag for tracking if loop is first
     while True:
         print("===============debug id=2===============")
         print("memory use: ", gc.mem_alloc() / 1024, "KiB")
@@ -174,6 +175,8 @@ def main():
         if wifi.isconnected():
             refresh(ssd, True)
             ssd.wait_until_ready()
+        if initial_boot:  # If first time booting...
+            displayInit()  # Init the display
         Label(
             wri_small,
             labelRow1,
@@ -263,8 +266,10 @@ def main():
         refresh(ssd, False)
         ssd.wait_until_ready()
         ssd.sleep()
+        initial_boot = False  # Turn init off for subsequent cycles
         if not issue:
             time.sleep(600)  # 600 normal
+            print("refreshing...")
         else:
             wifi.disconnect()
             print("===============debug id=3===============")
