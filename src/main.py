@@ -1,5 +1,6 @@
 import orangeClockFunctions.displayBlockMoscowFees as orangeClock
 import orangeClockFunctions.displaySetupDialog as setupDialog
+import orangeClockFunctions.displayLoadingScreen as loadingScreen
 from phew import access_point, connect_to_wifi, is_connected_to_wifi, dns, server
 from phew.template import render_template
 import json
@@ -55,10 +56,17 @@ def setup_mode():
     ip = ap.ifconfig()[0]
     dns.run_catchall(ip)
 
-def application_mode():
+def application_mode(ip: str = ""):
+    """Function to start the main display application. A loading screen is first booted to be shown as the main display
+    loads.
+
+    :param ip: The IP of OrangeClock
+    """
     print("Entering application mode.")
     onboard_led = machine.Pin("LED", machine.Pin.OUT)
     orangeClock.setSecrets(wifi_credentials["ssid"], wifi_credentials["password"])
+    print("Loading...")
+    loadingScreen.main(ip)
     orangeClock.main()
 
     def app_index(request):
@@ -95,7 +103,7 @@ try:
             machine_reset()
 
         print(f"Connected to wifi, IP address {ip_address}")
-        application_mode()
+        application_mode(ip_address)
 
 except Exception:
     # Either no wifi configuration file found, or something went wrong, 
