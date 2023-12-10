@@ -101,7 +101,6 @@ def getMempoolFeesString():
 def getNostrZapCount(nPub):
     gc.collect()
     data = urequests.get("https://api.nostr.band/v0/stats/profile/"+nPub)
-    print(str(data.json())[12:76])
     jsonData = str(data.json()["stats"][str(data.json())[12:76]]["zaps_received"]["count"])
     data.close()
     return jsonData
