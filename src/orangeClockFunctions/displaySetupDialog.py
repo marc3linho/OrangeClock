@@ -33,7 +33,7 @@ def main():
     Label(
         wri_small,
         labelRow1,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "I") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "J") + 4),
         setupTxt,
     )
 
@@ -41,13 +41,13 @@ def main():
         wri_iconsSmall,
         labelRow1 + 2,
         labelCol,
-        "I",
+        "J",
     )
     
     Label(
         wri_small,
         labelRow2,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "K") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "L") + 4),
         wifiTxt,
     )
     
@@ -55,7 +55,7 @@ def main():
         wri_iconsSmall,
         labelRow2,
         labelCol,
-        "K",
+        "L",
     )
     
     Label(
