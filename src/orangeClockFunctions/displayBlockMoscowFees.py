@@ -27,8 +27,9 @@ symbolRow2 = "G"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
-dispVersion = "mts" #mts = moscow time satsymbol / #mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
-
+dispVersion1 = "bh"  #bh = block height
+dispVersion2 = "mts" #mts = moscow time satsymbol / #mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
+npub = ""
 
 def connectWIFI():
     global wifi
@@ -39,9 +40,13 @@ def connectWIFI():
     print(wifi.isconnected())
 
 
-def setSelectDisplay(displayVersion):
-    global dispVersion
-    dispVersion = displayVersion
+def setSelectDisplay(displayVersion1, nPub, displayVersion2):
+    global dispVersion1
+    global dispVersion2
+    global npub
+    dispVersion1 = displayVersion1
+    npub = nPub
+    dispVersion2 = displayVersion2
 
 
 def setSecrets(SSID, PASSWORD):
@@ -91,6 +96,15 @@ def getMempoolFeesString():
         + str(mempoolFees["fastestFee"])
     )
     return mempoolFeesString
+
+
+def getNostrZapCount(nPub):
+    gc.collect()
+    data = urequests.get("https://api.nostr.band/v0/stats/profile/"+nPub)
+    print(str(data.json())[12:76])
+    jsonData = str(data.json()["stats"][str(data.json())[12:76]]["zaps_received"]["count"])
+    data.close()
+    return jsonData
 
 
 def displayInit():
@@ -143,8 +157,12 @@ def main():
             refresh(ssd, True)
             time.sleep(5)
         try:
-            symbolRow1 = "A"
-            blockHeight = getLastBlock()
+            if dispVersion2 == "zap":
+                symbolRow1 = "E"
+                blockHeight = getNostrZapCount(npub)
+            else:
+                symbolRow1 = "A"
+                blockHeight = getLastBlock()    
         except Exception as err:
             blockHeight = "connection error"
             symbolRow1 = ""
@@ -152,16 +170,16 @@ def main():
             debugConsoleOutput("3")
             issue = True
         try:
-            if dispVersion == "mt":
+            if dispVersion2 == "mt":
                 symbolRow2 = ""
                 textRow2 = getMoscowTime()
-            elif dispVersion == "mts2":
+            elif dispVersion2 == "mts2":
                 symbolRow2 = "H"
                 textRow2 = getMoscowTime()
-            elif dispVersion == "fp1":
+            elif dispVersion2 == "fp1":
                 symbolRow2 = "J"
                 textRow2 = str(getPrice("USD"))
-            elif dispVersion == "fp2":
+            elif dispVersion2 == "fp2":
                 symbolRow2 = "B"
                 textRow2 = str(getPrice("EUR"))
             else:
@@ -284,4 +302,5 @@ def main():
             gc.collect()
 
         i = i + 1
-
+        
+        
