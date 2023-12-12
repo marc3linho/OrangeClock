@@ -156,7 +156,7 @@ def main():
             refresh(ssd, True)
             time.sleep(5)
         try:
-            if dispVersion2 == "zap":
+            if dispVersion1 == "zap":
                 symbolRow1 = "E"
                 blockHeight = getNostrZapCount(npub)
             else:
