@@ -12,6 +12,7 @@ import gui.fonts.orangeClockIcons35 as iconsLarge
 import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 import gc
+import math
 
 wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
 wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
@@ -106,6 +107,10 @@ def getNostrZapCount(nPub):
     return jsonData
 
 
+def getNextHalving():
+    return str(210000 * (math.trunc(int(getLastBlock()) / 210000) + 1) - int(getLastBlock()))
+
+
 def displayInit():
     refresh(ssd, True)
     ssd.wait_until_ready()
@@ -156,9 +161,12 @@ def main():
             refresh(ssd, True)
             time.sleep(5)
         try:
-            if dispVersion2 == "zap":
+            if dispVersion1 == "zap":
                 symbolRow1 = "F"
                 blockHeight = getNostrZapCount(npub)
+            elif dispVersion1 == "hal":
+                symbolRow1 = "E"
+                blockHeight = getNextHalving()
             else:
                 symbolRow1 = "A"
                 blockHeight = getLastBlock()    
