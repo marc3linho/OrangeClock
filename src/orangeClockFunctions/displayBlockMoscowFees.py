@@ -23,7 +23,7 @@ labelRow1 = 5
 labelRow2 = 42
 labelRow3 = 98
 symbolRow1 = "A"
-symbolRow2 = "G"
+symbolRow2 = "H"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
@@ -156,8 +156,8 @@ def main():
             refresh(ssd, True)
             time.sleep(5)
         try:
-            if dispVersion1 == "zap":
-                symbolRow1 = "E"
+            if dispVersion2 == "zap":
+                symbolRow1 = "F"
                 blockHeight = getNostrZapCount(npub)
             else:
                 symbolRow1 = "A"
@@ -173,16 +173,16 @@ def main():
                 symbolRow2 = ""
                 textRow2 = getMoscowTime()
             elif dispVersion2 == "mts2":
-                symbolRow2 = "H"
+                symbolRow2 = "I"
                 textRow2 = getMoscowTime()
             elif dispVersion2 == "fp1":
-                symbolRow2 = "J"
+                symbolRow2 = "K"
                 textRow2 = str(getPrice("USD"))
             elif dispVersion2 == "fp2":
                 symbolRow2 = "B"
                 textRow2 = str(getPrice("EUR"))
             else:
-                symbolRow2 = "G"
+                symbolRow2 = "H"
                 textRow2 = getMoscowTime()        
         except Exception as err:
             textRow2 = "error"
