@@ -1,38 +1,92 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>OrangeClock Setup</title>
-    </head>
-    <body>
-        <h1 style="color: #e86223;">OrangeClock Setup (Version: V0.2-beta)</h1>
-        <p>Let&apos;s configure the OrangeClock:</p>
-        <form action="/configure" method="POST" autocomplete="off" autocapitalize="none">
-            <h4 style="color: #e86223;">Display Line 1</h4>
-                <input type="radio" id="bh" name="checkbox1" value="bh">
-                <label for="mt">Block Time</label><br>
-                <input type="radio" id="hal" name="checkbox1" value="hal">
-                <label for="mt">Blocks until the next halving</label><br>
-                <input type="radio" id="zap" name="checkbox1" value="zap">
-                <label for=mts">Nostr Zap Counter</label> 
-                <input type="text" value ="set npub" id="npub" name="npub" style="color: #e86223;"><br>
-            <h4 style="color: #e86223;">Display Line 2</h4>
-                <input type="radio" id="mt" name="checkbox2" value="mt">
-                <label for="mt">Moscow Time</label><br>
-                <input type="radio" id="mts" name="checkbox2" value="mts">
-                <label for=mts">Moscow Time with Satsymbol</label><br>
-                <input type="radio" id="mts2" name="checkbox2" value="mts2">
-                <label for=mts2">Moscow Time with sat/USD Icon</label><br>
-                <input type="radio" id="fp1" name="checkbox2" value="fp1">
-                <label for="fp">Fiat Price [$]</label><br>
-                <input type="radio" id="fp2" name="checkbox2" value="fp2">
-                <label for="fp">Fiat Price [&euro;]</label><br><br>
-                <label for="ssid">SSID:</label><br>
-                <input type="text" id="ssid" name="ssid" style="color: #e86223;"><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" style="color: #e86223;"><br><br>
-                <button>Save</button>
-        </form>
-    </body>
-</html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OrangeClock Setup</title>
+    <style>
+        body{font-family:Arial, Helvetica, sans-serif; font-size:1rem; line-height:1.5rem; text-align:left;}
+        h3{margin-bottom:0.5em; }
+        h4{margin-top:0.5em; margin-bottom:0.25em;}
+        hr{width:20rem; border:1px solid rgba(243,244,246); margin:2em 0 2em 0;}
+        input[type="text"],[type="password"]{width:16rem; font-size:0.875rem; line-height:1.25rem; padding:0.25em 0.5em 0.25em 0.5em; border-style:solid; border-radius:0.375rem; border:1px solid rgba(156 163 175); display:block;}
+        label{font-size:0.875rem; }
+        button{width:20rem; background-color:rgba(59,130,246); font-size:0.875rem; line-height:1.25rem; color:rgba(255,255,255); padding:0.5em 0.5em 0.5em 0.5em; border-radius:0.375rem; border:none; margin-top:1.5rem;}
+        button:hover{background-color:rgba(59,130,246,0.8);}
+        .btc-orange{color:#ff9500;}
+    </style>
+</head>
+<body>
+<div>
+    <div style="line-height:1em">
+        <h1 class="btc-orange">OrangeClock Setup</h1>
+        <h3>v0.2-beta</h3>
+    </div>
+    <hr />
+    <form action="/configure" method="POST" autocomplete="off" autocapitalize="none">
+        <div>
+            <h2>Network</h2>
+            <div>
+                <label for="ssid">SSID</label>
+                <input type="text" id="ssid" name="ssid" placeholder="SSID">
+            </div>
+            <div style="margin-top:0.5rem;">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+        </div>
+        <hr />
+        <div>
+            <h2>Layout</h2>
+            <h3>Line 1</h3>
+            <div>
+                <div>
+                    <input type="radio" id="bh" name="line1" value="bh" checked="checked">
+                    <label for="mt">Block Time</label>
+                </div>
+                <div>
+                    <input type="radio" id="hal" name="line1" value="hal">
+                    <label for="mt">Halving Countdown</label>
+                </div>
+                <div>
+                    <input type="radio" id="zap" name="line1" value="zap">
+                    <label for=mts">Nostr Zap Counter</label>
+                    <input type="text" id="npub" name="npub" placeholder="npub" style="width:14.5rem; margin:0.125rem 0 0 1.5rem;">
+                </div>
+            </div>
+            <h3>Line 2</h3>
+            <div>
+                <div>
+                    <input type="radio" id="mts" name="line2" value="mts" checked="checked">
+                    <label for=mts">Moscow Time (satsymbol icon)</label>
+                </div>
+                <div>
+                    <input type="radio" id="mts2" name="line2" value="mts2">
+                    <label for=mts2">Moscow Time (sat/USD icon)</label>
+                </div>
+                <div>
+                    <input type="radio" id="mt" name="line2" value="mt">
+                    <label for="mt">Moscow Time (no icon)</label>
+                </div>
 
+                <div>
+                    <input type="radio" id="fp1" name="line2" value="fp1">
+                    <label for="fp">Fiat Price ($)</label>
+                </div>
+                <div>
+                    <input type="radio" id="fp2" name="line2" value="fp2">
+                    <label for="fp">Fiat Price (&euro;)</label>
+                </div>
+            </div>
+            <h3>Line 3</h3>
+            <div>
+                <div>
+                    <input type="radio" id="fees" name="line3" value="fees" checked="checked">
+                    <label for="fees">Transaction Fees</label>
+                </div>
+            </div>
+        <button>Save</button>
+    </form>
+</div>
+</body>
+</html>
