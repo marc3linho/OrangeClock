@@ -1,6 +1,6 @@
 # OrangeClock
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="50%" height="50%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="70%">
 
 ## Hardware:
 
