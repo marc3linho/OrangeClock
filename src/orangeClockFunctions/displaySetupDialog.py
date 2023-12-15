@@ -5,7 +5,7 @@ from gui.widgets.label import Label
 
 import time
 import gui.fonts.orangeClockIcons25 as iconsSmall
-import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 
 
@@ -33,7 +33,7 @@ def main():
     Label(
         wri_small,
         labelRow1,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "G") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "J") + 4),
         setupTxt,
     )
 
@@ -41,13 +41,13 @@ def main():
         wri_iconsSmall,
         labelRow1 + 2,
         labelCol,
-        "G",
+        "J",
     )
     
     Label(
         wri_small,
         labelRow2,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "I") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "L") + 4),
         wifiTxt,
     )
     
@@ -55,7 +55,7 @@ def main():
         wri_iconsSmall,
         labelRow2,
         labelCol,
-        "I",
+        "L",
     )
     
     Label(

@@ -36,7 +36,7 @@
 
 4. After restart (unplug and replug the OrangeClock) you can access the wifi-manager with your phone or computer (ssid = OrangeClockWifi) and open the URI orange.clock in your browser
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/wifi_1.jpg" width="50%" >
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/wifi_1.png" width="50%" >
 
 5. Set your wifi credentials and save them, the OrangeClock will reboot automatically and connect to your network
 

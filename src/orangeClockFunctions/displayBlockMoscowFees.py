@@ -9,9 +9,10 @@ import urequests
 import json
 import gui.fonts.orangeClockIcons25 as iconsSmall
 import gui.fonts.orangeClockIcons35 as iconsLarge
-import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 import gc
+import math
 
 wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
 wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
@@ -20,14 +21,16 @@ wri_small = Writer(ssd, small, verbose=False)
 
 rowMaxDisplay = 296
 labelRow1 = 5
-labelRow2 = 36
+labelRow2 = 42
 labelRow3 = 98
 symbolRow1 = "A"
-symbolRow2 = "F"
+symbolRow2 = "H"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
-
+dispVersion1 = "bh"  #bh = block height
+dispVersion2 = "mts" #mts = moscow time satsymbol / #mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
+npub = ""
 
 def connectWIFI():
     global wifi
@@ -38,6 +41,15 @@ def connectWIFI():
     print(wifi.isconnected())
 
 
+def setSelectDisplay(displayVersion1, nPub, displayVersion2):
+    global dispVersion1
+    global dispVersion2
+    global npub
+    dispVersion1 = displayVersion1
+    npub = nPub
+    dispVersion2 = displayVersion2
+
+
 def setSecrets(SSID, PASSWORD):
     global secretsSSID
     global secretsPASSWORD
@@ -45,16 +57,16 @@ def setSecrets(SSID, PASSWORD):
     secretsPASSWORD = PASSWORD
 
 
-def getPriceUSD():
+def getPrice(currency): # change USD to EUR for price in euro
     gc.collect()
     data = urequests.get("https://mempool.space/api/v1/prices")
-    priceUSD = data.json()["USD"]  # change USD to EUR for price in euro
+    price = data.json()[currency]
     data.close()
-    return priceUSD
+    return price
 
 
 def getMoscowTime():
-    moscowTime = str(int(100000000 / float(getPriceUSD())))
+    moscowTime = str(int(100000000 / float(getPrice("USD"))))
     return moscowTime
 
 
@@ -87,6 +99,18 @@ def getMempoolFeesString():
     return mempoolFeesString
 
 
+def getNostrZapCount(nPub):
+    gc.collect()
+    data = urequests.get("https://api.nostr.band/v0/stats/profile/"+nPub)
+    jsonData = str(data.json()["stats"][str(data.json())[12:76]]["zaps_received"]["count"])
+    data.close()
+    return jsonData
+
+
+def getNextHalving():
+    return str(210000 * (math.trunc(int(getLastBlock()) / 210000) + 1) - int(getLastBlock()))
+
+
 def displayInit():
     refresh(ssd, True)
     ssd.wait_until_ready()
@@ -99,27 +123,28 @@ def displayInit():
     time.sleep(5)
 
 
+def debugConsoleOutput(id):
+    print("===============debug id= " + id + "===============")
+    print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+    print("memory free: ", gc.mem_free() / 1024, "KiB")
+    print("===============end debug===============")
+
+
 def main():
     gc.enable()
     global wifi
     global secretsSSID
     global secretsPASSWORD
-    print("===============debug id=1===============")
-    print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-    print("memory free: ", gc.mem_free() / 1024, "KiB")
-    print("===============end=debug===============")
+    debugConsoleOutput("1")
     issue = False
     blockHeight = ""
-    moscowTime = ""
+    textRow2 = ""
     mempoolFees = ""
     i = 1
     connectWIFI()
     displayInit()
     while True:
-        print("===============debug id=2===============")
-        print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-        print("memory free: ", gc.mem_free() / 1024, "KiB")
-        print("===============end=debug===============")
+        debugConsoleOutput("2")
         if issue:
             issue = False
         if i > 72:
@@ -136,28 +161,42 @@ def main():
             refresh(ssd, True)
             time.sleep(5)
         try:
-            symbolRow1 = "A"
-            blockHeight = getLastBlock()
+            if dispVersion1 == "zap":
+                symbolRow1 = "F"
+                blockHeight = getNostrZapCount(npub)
+            elif dispVersion1 == "hal":
+                symbolRow1 = "E"
+                blockHeight = getNextHalving()
+            else:
+                symbolRow1 = "A"
+                blockHeight = getLastBlock()    
         except Exception as err:
             blockHeight = "connection error"
             symbolRow1 = ""
             print("Block: Handling run-time error:", err)
-            print("===============debug id=2.1===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("3")
             issue = True
         try:
-            symbolRow2 = "F"
-            moscowTime = getMoscowTime()
+            if dispVersion2 == "mt":
+                symbolRow2 = ""
+                textRow2 = getMoscowTime()
+            elif dispVersion2 == "mts2":
+                symbolRow2 = "I"
+                textRow2 = getMoscowTime()
+            elif dispVersion2 == "fp1":
+                symbolRow2 = "K"
+                textRow2 = str(getPrice("USD"))
+            elif dispVersion2 == "fp2":
+                symbolRow2 = "B"
+                textRow2 = str(getPrice("EUR"))
+            else:
+                symbolRow2 = "H"
+                textRow2 = getMoscowTime()        
         except Exception as err:
-            moscowTime = "error"
+            textRow2 = "error"
             symbolRow2 = ""
             print("Moscow: Handling run-time error:", err)
-            print("===============debug id=2.2===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("4")
             issue = True
         try:
             symbolRow3 = "C"
@@ -166,10 +205,7 @@ def main():
             mempoolFees = "connection error"
             symbolRow3 = ""
             print("Fees: Handling run-time error:", err)
-            print("===============debug id=2.1===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("5")
             issue = True
         if wifi.isconnected():
             refresh(ssd, True)
@@ -209,22 +245,22 @@ def main():
             int(
                 (
                     rowMaxDisplay
-                    - Writer.stringlen(wri_large, moscowTime)
+                    - Writer.stringlen(wri_large, textRow2)
                     + Writer.stringlen(wri_iconsLarge, symbolRow2)
                     + 2  # spacing
                 )
                 / 2
             ),
-            moscowTime,
+            textRow2,
         )
         Label(
             wri_iconsLarge,
-            labelRow2 + 7,  # + 10 for centered satsymbol
+            labelRow2,  # + 10 for centered satsymbol
             int(
                 (
                     rowMaxDisplay
                     - Writer.stringlen(wri_iconsLarge, symbolRow2)
-                    - Writer.stringlen(wri_large, moscowTime)
+                    - Writer.stringlen(wri_large, textRow2)
                     - 2  # spacing
                 )
                 / 2
@@ -267,12 +303,11 @@ def main():
             time.sleep(600)  # 600 normal
         else:
             wifi.disconnect()
-            print("===============debug id=3===============")
-            print("memory use: ", gc.mem_alloc() / 1024, "KiB")
-            print("memory free: ", gc.mem_free() / 1024, "KiB")
-            print("===============end=debug===============")
+            debugConsoleOutput("6")
             wifi.connect(secretsSSID, secretsPASSWORD)
             time.sleep(60)
             gc.collect()
 
         i = i + 1
+        
+        
