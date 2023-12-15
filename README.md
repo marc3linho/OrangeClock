@@ -32,7 +32,7 @@
 
 3. All files in src must be copied to the Pico (except for layoutExample.py and clearDisplay.py, but they also do not interfere)
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/thonny_1.jpeg" width="100%" height="100%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/thonny_1.png" width="100%" height="100%">
 
 4. After restart (unplug and replug the OrangeClock) you can access the wifi-manager with your phone or computer (ssid = OrangeClockWifi) and open the URI orange.clock in your browser
 
