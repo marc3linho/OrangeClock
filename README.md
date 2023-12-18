@@ -10,7 +10,7 @@
 
 * soldering is only necessary with the Pico W
 
-[Waveshare 2.9" eInk Display](https://www.waveshare.com/wiki/Pico-ePaper-2.9)
+[Waveshare 2.9" eInk Display (**with socket for Raspberry Pi Pico!**)](https://www.waveshare.com/pico-epaper-2.9.htm)
 
 
 4 x screws M2,5x6 for the 3D printed case
