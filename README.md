@@ -1,6 +1,6 @@
-# OrangeClock
+# <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/f310ad9b1bc2dffdf91db50cc76138efc2a45393/logo/light/png/logo.png" width="100%">
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="70%">
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="100%">
 
 ## Hardware:
 
