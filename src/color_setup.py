@@ -54,4 +54,3 @@ pdc = machine.Pin(DC_PIN, machine.Pin.OUT)
 gc.collect()  # Precaution before instantiating framebuf
 ssd = SSD(spi, pcs, pdc, prst, pbusy, landscape=True, asyn=False, full=True)  # Create a display instance ssd = SSD(spi, pcs, pdc, prst, pbusy, landscape=True, asyn=False, full=False) for partial refresh
 # ssdred = SSDred(spi, pcs, pdc, prst, pbusy, landscape=False)  # Cread a red display instance (just for B model)
-ssd.demo_mode = True
