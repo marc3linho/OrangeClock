@@ -61,8 +61,9 @@ def getPrice(currency): # change USD to EUR for price in euro
     gc.collect()
     data = urequests.get("https://mempool.space/api/v1/prices")
     price = data.json()[currency]
+    formatted_price = f"{price:,}"
     data.close()
-    return price
+    return formatted_price
 
 
 def getMoscowTime():
