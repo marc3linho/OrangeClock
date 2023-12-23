@@ -61,14 +61,21 @@ def getPrice(currency): # change USD to EUR for price in euro
     gc.collect()
     data = urequests.get("https://mempool.space/api/v1/prices")
     price = data.json()[currency]
-    formatted_price = f"{price:,}"
     data.close()
-    return formatted_price
+    return price
 
 
 def getMoscowTime():
     moscowTime = str(int(100000000 / float(getPrice("USD"))))
     return moscowTime
+
+
+def getFiatPrice(currency):
+    gc.collect()
+    data = urequests.get("https://mempool.space/api/v1/prices")
+    price = data.json()[currency]
+    fiatPrice = f"{price:,}"
+    return fiatPrice
 
 
 def getLastBlock():
@@ -186,10 +193,10 @@ def main():
                 textRow2 = getMoscowTime()
             elif dispVersion2 == "fp1":
                 symbolRow2 = "K"
-                textRow2 = str(getPrice("USD"))
+                textRow2 = str(getFiatPrice("USD"))
             elif dispVersion2 == "fp2":
                 symbolRow2 = "B"
-                textRow2 = str(getPrice("EUR"))
+                textRow2 = str(getFiatPrice("EUR"))
             else:
                 symbolRow2 = "H"
                 textRow2 = getMoscowTime()        
