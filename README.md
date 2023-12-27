@@ -34,7 +34,7 @@
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/thonny_1.png" width="100%" height="100%">
 
-4. After restart (unplug and replug the OrangeClock) you can access the wifi-manager with your phone or computer (ssid = OrangeClockWifi) and open the URI orange.clock in your browser
+4. After restart (unplug and replug the OrangeClock) you can access the wifi-manager with your phone or computer (ssid = OrangeClockWifi) and open the URI orange.clock (http://orange.clock/) in your browser
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/wifi_1.png" width="50%" >
 
