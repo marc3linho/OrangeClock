@@ -70,6 +70,13 @@ def getMoscowTime():
     return moscowTime
 
 
+def getPriceDisplay(currency):
+    price_str = f"{getPrice(currency):,}"
+    if currency == "EUR":
+        price_str = price_str.replace(",", ".")
+    return price_str
+
+
 def getLastBlock():
     gc.collect()
     data = urequests.get("https://mempool.space/api/blocks/tip/height")
@@ -185,10 +192,10 @@ def main():
                 textRow2 = getMoscowTime()
             elif dispVersion2 == "fp1":
                 symbolRow2 = "K"
-                textRow2 = str(getPrice("USD"))
+                textRow2 = getPriceDisplay("USD")
             elif dispVersion2 == "fp2":
                 symbolRow2 = "B"
-                textRow2 = str(getPrice("EUR"))
+                textRow2 = getPriceDisplay("EUR")
             else:
                 symbolRow2 = "H"
                 textRow2 = getMoscowTime()        
@@ -207,100 +214,104 @@ def main():
             print("Fees: Handling run-time error:", err)
             debugConsoleOutput("5")
             issue = True
-        if wifi.isconnected():
-            refresh(ssd, True)
-            ssd.wait_until_ready()
-        Label(
-            wri_small,
-            labelRow1,
-            int(
-                (
-                    rowMaxDisplay
-                    - Writer.stringlen(wri_small, blockHeight)
-                    + Writer.stringlen(wri_iconsSmall, symbolRow1)
-                    + 4  # spacing
-                )
-                / 2
-            ),
-            blockHeight,
-        )
 
-        Label(
-            wri_iconsSmall,
-            labelRow1 + 2,  # center icon with text
-            int(
-                (
-                    rowMaxDisplay
-                    - Writer.stringlen(wri_iconsSmall, symbolRow1)
-                    - Writer.stringlen(wri_small, blockHeight)
-                    - 4  # spacing
-                )
-                / 2
+        labels = [
+            Label(
+                wri_small,
+                labelRow1,
+                int(
+                    (
+                        rowMaxDisplay
+                        - Writer.stringlen(wri_small, blockHeight)
+                        + Writer.stringlen(wri_iconsSmall, symbolRow1)
+                        + 4  # spacing
+                    )
+                    / 2
+                ),
+                blockHeight,
             ),
-            symbolRow1,
-        )
-        Label(
-            wri_large,
-            labelRow2,
-            int(
-                (
-                    rowMaxDisplay
-                    - Writer.stringlen(wri_large, textRow2)
-                    + Writer.stringlen(wri_iconsLarge, symbolRow2)
-                    + 2  # spacing
-                )
-                / 2
+            Label(
+                wri_iconsSmall,
+                labelRow1 + 2,  # center icon with text
+                int(
+                    (
+                        rowMaxDisplay
+                        - Writer.stringlen(wri_iconsSmall, symbolRow1)
+                        - Writer.stringlen(wri_small, blockHeight)
+                        - 4  # spacing
+                    )
+                    / 2
+                ),
+                symbolRow1,
             ),
-            textRow2,
-        )
-        Label(
-            wri_iconsLarge,
-            labelRow2,  # + 10 for centered satsymbol
-            int(
-                (
-                    rowMaxDisplay
-                    - Writer.stringlen(wri_iconsLarge, symbolRow2)
-                    - Writer.stringlen(wri_large, textRow2)
-                    - 2  # spacing
-                )
-                / 2
+            Label(
+                wri_large,
+                labelRow2,
+                int(
+                    (
+                        rowMaxDisplay
+                        - Writer.stringlen(wri_large, textRow2)
+                        + Writer.stringlen(wri_iconsLarge, symbolRow2)
+                        + 2  # spacing
+                    )
+                    / 2
+                ),
+                textRow2,
             ),
-            symbolRow2,
-        )
-        Label(
-            wri_small,
-            labelRow3,
-            int(
-                (
-                    rowMaxDisplay
-                    - Writer.stringlen(wri_small, mempoolFees)
-                    + Writer.stringlen(wri_iconsSmall, symbolRow3)
-                    + 4  # spacing
-                )
-                / 2
+            Label(
+                wri_iconsLarge,
+                labelRow2,  # + 10 for centered satsymbol
+                int(
+                    (
+                        rowMaxDisplay
+                        - Writer.stringlen(wri_iconsLarge, symbolRow2)
+                        - Writer.stringlen(wri_large, textRow2)
+                        - 2  # spacing
+                    )
+                    / 2
+                ),
+                symbolRow2,
             ),
-            mempoolFees,
-        )
-        Label(
-            wri_iconsSmall,
-            labelRow3 + 1,  # center icon with text
-            int(
-                (
-                    rowMaxDisplay
-                    - Writer.stringlen(wri_iconsSmall, symbolRow3)
-                    - Writer.stringlen(wri_small, mempoolFees)
-                    - 4  # spacing
-                )
-                / 2
+            Label(
+                wri_small,
+                labelRow3,
+                int(
+                    (
+                        rowMaxDisplay
+                        - Writer.stringlen(wri_small, mempoolFees)
+                        + Writer.stringlen(wri_iconsSmall, symbolRow3)
+                        + 4  # spacing
+                    )
+                    / 2
+                ),
+                mempoolFees,
             ),
-            symbolRow3,
-        )
+            Label(
+                wri_iconsSmall,
+                labelRow3 + 1,  # center icon with text
+                int(
+                    (
+                        rowMaxDisplay
+                        - Writer.stringlen(wri_iconsSmall, symbolRow3)
+                        - Writer.stringlen(wri_small, mempoolFees)
+                        - 4  # spacing
+                    )
+                    / 2
+                ),
+                symbolRow3,
+            )
+        ]
 
         refresh(ssd, False)
         ssd.wait_until_ready()
         ssd.sleep()
         if not issue:
             time.sleep(600)  # 600 normal
+
+            # Have the Labels write blanks into the framebuf to erase what they
+            # rendered in the previous cycle.
+            for label in labels:
+                label.value("")
         else:
             wifi.disconnect()
             debugConsoleOutput("6")
@@ -309,5 +320,3 @@ def main():
             gc.collect()
 
         i = i + 1
-        
-        
