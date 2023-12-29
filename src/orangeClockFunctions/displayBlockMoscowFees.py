@@ -70,6 +70,13 @@ def getMoscowTime():
     return moscowTime
 
 
+def getPriceDisplay(currency):
+    price_str = f"{getPrice(currency):,}"
+    if currency == "EUR":
+        price_str = price_str.replace(",", ".")
+    return price_str
+
+
 def getLastBlock():
     gc.collect()
     data = urequests.get("https://mempool.space/api/blocks/tip/height")
@@ -185,10 +192,10 @@ def main():
                 textRow2 = getMoscowTime()
             elif dispVersion2 == "fp1":
                 symbolRow2 = "K"
-                textRow2 = str(getPrice("USD"))
+                textRow2 = getPriceDisplay("USD")
             elif dispVersion2 == "fp2":
                 symbolRow2 = "B"
-                textRow2 = str(getPrice("EUR"))
+                textRow2 = getPriceDisplay("EUR")
             else:
                 symbolRow2 = "H"
                 textRow2 = getMoscowTime()        
