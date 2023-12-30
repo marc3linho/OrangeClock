@@ -6,7 +6,7 @@ from gui.widgets.label import Label
 import time
 import gui.fonts.orangeClockIcons25 as iconsSmall
 import gui.fonts.orangeClockIcons35 as iconsLarge
-import gui.fonts.libreFranklinBold60 as large
+import gui.fonts.libreFranklinBold56 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 
 
@@ -17,16 +17,20 @@ wri_small = Writer(ssd, small, verbose=False)
 
 
 labelRow1 = 5
-labelRow2 = 36
+labelRow2 = 42
 labelRow3 = 98
 
 # Display 296*128
 displayLength = 296
 displayHeight = 128
-blockHeight = "805010"  # A
-moscowTime = "3883"  # E
-mempoolFees = "L:8 M:8 H:9"  # C
-dollarSats = "26,000"  # H
+symbolRow1 = "A"
+symbolRow2 = "H"
+symbolRow3 = "C"
+blockHeight = "823376"  # A
+moscowTime = "2344"  # H
+mempoolFees = "L:89 M:99 H:109"  # C
+dollarSats = "100,000"  # K
+#moscowTime = dollarSats
 
 
 def main():
@@ -40,7 +44,7 @@ def main():
             (
                 displayLength
                 - Writer.stringlen(wri_small, blockHeight)
-                + Writer.stringlen(wri_iconsSmall, "A")
+                + Writer.stringlen(wri_iconsSmall, symbolRow1)
                 + 4
             )
             / 2
@@ -54,13 +58,13 @@ def main():
         int(
             (
                 displayLength
-                - Writer.stringlen(wri_iconsSmall, "A")
+                - Writer.stringlen(wri_iconsSmall, symbolRow1)
                 - Writer.stringlen(wri_small, blockHeight)
                 - 4
             )
             / 2
         ),
-        "A",
+        symbolRow1,
     )
     Label(
         wri_large,
@@ -69,7 +73,8 @@ def main():
             (
                 displayLength
                 - Writer.stringlen(wri_large, moscowTime)
-                + Writer.stringlen(wri_iconsLarge, "E")    
+                + Writer.stringlen(wri_iconsLarge, symbolRow2)
+                + 2  # spacing
             )
             / 2
         ),
@@ -77,16 +82,17 @@ def main():
     )
     Label(
         wri_iconsLarge,
-        labelRow2 + 7, #+ 10 for centered satsymbol
+        labelRow2 + 1, #+ 7 for centered satsymbol
         int(
             (
                 displayLength
-                - Writer.stringlen(wri_iconsLarge, "E")
+                - Writer.stringlen(wri_iconsLarge, symbolRow2)
                 - Writer.stringlen(wri_large, moscowTime)
+                - 2  # spacing
             )
             / 2
         ),
-        "E",
+        symbolRow2,
     )
     Label(
         wri_small,
@@ -95,7 +101,7 @@ def main():
             (
                 displayLength
                 - Writer.stringlen(wri_small, mempoolFees)
-                + Writer.stringlen(wri_iconsSmall, "C")
+                + Writer.stringlen(wri_iconsSmall, symbolRow3)
                 + 4
             )
             / 2
@@ -108,13 +114,13 @@ def main():
         int(
             (
                 displayLength
-                - Writer.stringlen(wri_iconsSmall, "C")
+                - Writer.stringlen(wri_iconsSmall, symbolRow3)
                 - Writer.stringlen(wri_small, mempoolFees)
                 - 4
             )
             / 2
         ),
-        "C",
+        symbolRow3,
     )
 
     ssd.wait_until_ready()

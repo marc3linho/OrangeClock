@@ -308,10 +308,6 @@ def main():
         if not issue:
             time.sleep(600)  # 600 normal
 
-            # Have the Labels write blanks into the framebuf to erase what they
-            # rendered in the previous cycle.
-            for label in labels:
-                label.value("")
         else:
             wifi.disconnect()
             debugConsoleOutput("6")
@@ -319,4 +315,9 @@ def main():
             time.sleep(60)
             gc.collect()
 
+        # Have the Labels write blanks into the framebuf to erase what they
+        # rendered in the previous cycle.
+        for label in labels:
+            label.value("")
+            
         i = i + 1
