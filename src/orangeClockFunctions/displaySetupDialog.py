@@ -5,7 +5,7 @@ from gui.widgets.label import Label
 
 import time
 import gui.fonts.orangeClockIcons25 as iconsSmall
-import gui.fonts.libreFranklinBold56 as large
+import gui.fonts.libreFranklinBold50 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 
 
@@ -15,7 +15,7 @@ wri_small = Writer(ssd, small, verbose=False)
 
 
 labelRow1 = 5
-labelRow2 = 46
+labelRow2 = 49
 labelRow3 = 85
 labelCol = 10
 
