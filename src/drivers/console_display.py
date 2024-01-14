@@ -36,6 +36,11 @@ def vpixels_1x2(vpix_bytes):
     """
     receives bytes of 8 vertical pixels side-by-side,
     returns 4tuple of UTFBLKS indices of 1x2 pixels from left to right
+
+    each byte is bitwise-anded with 2**i to select bit[i] for all 8 bits.
+    those powers of 2 are fed to int(bool()) resulting in 0 or 1 for each.
+    the odd bits are left shifted 1 then ored with the adjacent even bit
+    for an intval (0-3) to be used by caller for indexing UTFBLKS.
     """
     bits = range(0,8,2)
 
@@ -119,9 +124,9 @@ def mono_hmsb(buf, w, h, invert=False, footnote=""):
 
 
 class MonoConsoleDisplay(framebuf.FrameBuffer):
-    def __init__(self, width, height, mode="MONO_HLSB"):
-        self.width = width
-        self.height = height
+    def __init__(self, width, height, mode="MONO_HLSB", invert=False):
+        self.width = int(width)
+        self.height = int(height)
         if mode == "MONO_VLSB":
             self.mode = framebuf.MONO_VLSB
             self.renderer = mono_vlsb
@@ -133,6 +138,7 @@ class MonoConsoleDisplay(framebuf.FrameBuffer):
             self.renderer = mono_hlsb
         else:
             raise ValueError("mode not supported: %s" % mode)
+        self.invert = bool(invert)
         self.buffer = bytearray(width // 8 * height)
         self.show_calls = 0
         super().__init__(self.buffer, width, height, self.mode)
@@ -143,7 +149,7 @@ class MonoConsoleDisplay(framebuf.FrameBuffer):
         
     def show(self):
         self.show_calls += 1
-        self.renderer(self, self.width, self.height, 
+        self.renderer(self, self.width, self.height, invert=self.invert,
             footnote=" {} {}, {} ".format(
                 "{}x{}".format(self.width, self.height),
                 self.renderer.__name__,

@@ -61,5 +61,5 @@ ssd.sleep()
 del RST_PIN, DC_PIN, CS_PIN, BUSY_PIN, prst, pbusy, spi, pdc, ssd, SSD
 gc.collect()
 from drivers.console_display import MonoConsoleDisplay as SSD
-ssd = SSD(296, 128, "MONO_HLSB")
+ssd = SSD(296, 128, "MONO_HLSB", invert=True)
 # end #NO_SCREEN_AVAILABLE#
