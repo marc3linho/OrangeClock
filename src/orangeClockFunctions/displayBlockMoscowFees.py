@@ -9,7 +9,7 @@ import urequests
 import json
 import gui.fonts.orangeClockIcons25 as iconsSmall
 import gui.fonts.orangeClockIcons35 as iconsLarge
-import gui.fonts.libreFranklinBold56 as large
+import gui.fonts.libreFranklinBold50 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 import gc
 import math
@@ -21,7 +21,7 @@ wri_small = Writer(ssd, small, verbose=False)
 
 rowMaxDisplay = 296
 labelRow1 = 5
-labelRow2 = 42
+labelRow2 = 44
 labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "H"
@@ -252,7 +252,7 @@ def main():
                         rowMaxDisplay
                         - Writer.stringlen(wri_large, textRow2)
                         + Writer.stringlen(wri_iconsLarge, symbolRow2)
-                        + 2  # spacing
+                        # + 2  # spacing
                     )
                     / 2
                 ),
@@ -266,7 +266,7 @@ def main():
                         rowMaxDisplay
                         - Writer.stringlen(wri_iconsLarge, symbolRow2)
                         - Writer.stringlen(wri_large, textRow2)
-                        - 2  # spacing
+                        # - 2  # spacing
                     )
                     / 2
                 ),
