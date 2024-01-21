@@ -89,3 +89,5 @@ Thank you for your support and cooperation in this project
 [Printer_GoBrrr](https://www.gobrrr.me/) 
 
 [SeedSigner](https://SeedSigner.com)
+
+List of [contributors](https://github.com/marc3linho/OrangeClock/graphs/contributors)
