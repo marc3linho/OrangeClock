@@ -1,4 +1,7 @@
-# <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/f310ad9b1bc2dffdf91db50cc76138efc2a45393/logo/light/png/logo.png" width="100%">
+<picture>
+	<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/marc3linho/OrangeClock/90b6e2c70c04c6a3153371c7495a8f971b55a9f4/logo/dark/png/logo-dark.png">
+  <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/f310ad9b1bc2dffdf91db50cc76138efc2a45393/logo/light/png/logo.png">
+</picture>
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/OrangeClock_1.jpeg" width="100%">
 
