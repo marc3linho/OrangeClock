@@ -28,8 +28,8 @@ symbolRow2 = "H"
 symbolRow3 = "C"
 secretsSSID = ""
 secretsPASSWORD = ""
-dispVersion1 = "bh"  #bh = block height
-dispVersion2 = "mts" #mts = moscow time satsymbol / #mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
+dispVersion1 = "bh"  #bh = block height / hal = halving countdown / zap = Nostr zap counter
+dispVersion2 = "mts" #mts = moscow time satsymbol / mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
 npub = ""
 
 def connectWIFI():
