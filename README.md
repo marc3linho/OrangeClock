@@ -41,7 +41,7 @@
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/wifi_1.png" width="50%" >
 
-5. Set your wifi credentials and save them, the OrangeClock will reboot automatically and connect to your network
+5. Set your wifi credentials and save them, the OrangeClock will reboot automatically and connect to your network 
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/wifi_2.jpg" width="50%" >
 
@@ -51,15 +51,15 @@ If you have any questions, problems or suggestions please feel free to contact m
 
 ## Known bugs and strange effects
 
-Strange effect: The display flickers every 12 hours (The reason is a full refresh).
+* The wifi credentials are stored in plain text on the Pico, so the OrangeClock should be connected to an isolated network or guest network.
 
-Strange effect: After switching on, it takes about 2 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
+* Strange effect: The display flickers every 12 hours (The reason is a full refresh).
 
-Strange effect: After reconnecting to the WIFI network or other connection issues, the following errors are displayed: 
+* Strange effect: After switching on, it takes about 2 minutes until the display shows something. The reason for this is the initialization of the eInk display and artifacts in other starting procedures. (will be fixed in the near future)
 
-<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/error_1.jpeg" width="50%" height="50%">
-
+* Strange effect: After reconnecting to the WIFI network or other connection issues, the following errors are displayed: 
 This also happens when one of the data sources is temporarily unavailable. The update cycle is reduced to one minute until all data is available again.
+<img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/error_1.jpeg" width="50%" height="50%">
 
 ## Ressources / Links:
 
