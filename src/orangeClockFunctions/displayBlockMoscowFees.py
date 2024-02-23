@@ -19,7 +19,7 @@ wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
 wri_large = Writer(ssd, large, verbose=False)
 wri_small = Writer(ssd, small, verbose=False)
 
-rowMaxDisplay = 296
+rowMaxDisplay = ssd.width
 labelRow1 = 5
 labelRow2 = 44
 labelRow3 = 98
@@ -38,7 +38,7 @@ def connectWIFI():
     wifi.active(True)
     wifi.connect(secretsSSID, secretsPASSWORD)
     time.sleep(1)
-    print(wifi.isconnected())
+    print(f"wifi.isconnected()={wifi.isconnected()}")
 
 
 def setSelectDisplay(displayVersion1, nPub, displayVersion2):
@@ -67,6 +67,7 @@ def getPrice(currency): # change USD to EUR for price in euro
 
 def getMoscowTime():
     moscowTime = str(int(100000000 / float(getPrice("USD"))))
+    print(f"getMoscowTime()={moscowTime}")
     return moscowTime
 
 
@@ -74,6 +75,7 @@ def getPriceDisplay(currency):
     price_str = f"{getPrice(currency):,}"
     if currency == "EUR":
         price_str = price_str.replace(",", ".")
+    print(f"getPriceDisplay({currency})={price_str}")
     return price_str
 
 
@@ -82,6 +84,7 @@ def getLastBlock():
     data = urequests.get("https://mempool.space/api/blocks/tip/height")
     block = data.text
     data.close()
+    print(f"getLastBlock()={block}")
     return block
 
 
@@ -103,6 +106,7 @@ def getMempoolFeesString():
         + " H:"
         + str(mempoolFees["fastestFee"])
     )
+    print(f"getMempoolFeesString()={mempoolFeesString}")
     return mempoolFeesString
 
 
@@ -111,11 +115,14 @@ def getNostrZapCount(nPub):
     data = urequests.get("https://api.nostr.band/v0/stats/profile/"+nPub)
     jsonData = str(data.json()["stats"][str(data.json())[12:76]]["zaps_received"]["count"])
     data.close()
+    print(f"getNostrZapCount({nPub})={jsonData}")
     return jsonData
 
 
 def getNextHalving():
-    return str(210000 * (math.trunc(int(getLastBlock()) / 210000) + 1) - int(getLastBlock()))
+    nextHalving = str(210000 * (math.trunc(int(getLastBlock()) / 210000) + 1) - int(getLastBlock()))
+    print(f"getNextHalving()={nextHalving}")
+    return nextHalving
 
 
 def displayInit():
@@ -126,7 +133,8 @@ def displayInit():
     ssd.wait_until_ready()
     refresh(ssd, True)
     ssd.wait_until_ready()
-    ssd.sleep()  # deep sleep
+    # sleep() seems to never awaken on ePaper2in13
+    # ssd.sleep()  # deep sleep
     time.sleep(5)
 
 
@@ -143,6 +151,7 @@ def main():
     global secretsSSID
     global secretsPASSWORD
     debugConsoleOutput("1")
+    print(f"rowMaxDisplay={rowMaxDisplay}")
     issue = False
     blockHeight = ""
     textRow2 = ""
@@ -304,7 +313,8 @@ def main():
 
         refresh(ssd, False)
         ssd.wait_until_ready()
-        ssd.sleep()
+        # sleep() seems to never awaken on ePaper2in13
+        # ssd.sleep()
         if not issue:
             time.sleep(600)  # 600 normal
 
