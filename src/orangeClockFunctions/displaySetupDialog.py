@@ -19,8 +19,6 @@ labelRow2 = 49
 labelRow3 = 85
 labelCol = 10
 
-displayLength = 296
-displayHeight = 128
 setupTxt = "Setup:" 
 wifiTxt = "OrangeClockWifi"  
 URITxt = "URI: orange.clock" 
