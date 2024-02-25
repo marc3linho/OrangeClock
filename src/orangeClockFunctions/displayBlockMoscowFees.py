@@ -24,8 +24,8 @@ labelRow1 = 5
 labelRow2 = 44
 labelRow3 = 98
 symbolRow1 = "A"
-symbolRow2 = "H"
-symbolRow3 = "C"
+symbolRow2 = "L"
+symbolRow3 = "F"
 secretsSSID = ""
 secretsPASSWORD = ""
 dispVersion1 = "bh"  #bh = block height / hal = halving countdown / zap = Nostr zap counter
@@ -169,10 +169,10 @@ def main():
             time.sleep(5)
         try:
             if dispVersion1 == "zap":
-                symbolRow1 = "F"
+                symbolRow1 = "I"
                 blockHeight = getNostrZapCount(npub)
             elif dispVersion1 == "hal":
-                symbolRow1 = "E"
+                symbolRow1 = "H"
                 blockHeight = getNextHalving()
             else:
                 symbolRow1 = "A"
@@ -188,16 +188,16 @@ def main():
                 symbolRow2 = ""
                 textRow2 = getMoscowTime()
             elif dispVersion2 == "mts2":
-                symbolRow2 = "I"
+                symbolRow2 = "M"
                 textRow2 = getMoscowTime()
             elif dispVersion2 == "fp1":
-                symbolRow2 = "K"
+                symbolRow2 = "E"
                 textRow2 = getPriceDisplay("USD")
             elif dispVersion2 == "fp2":
                 symbolRow2 = "B"
                 textRow2 = getPriceDisplay("EUR")
             else:
-                symbolRow2 = "H"
+                symbolRow2 = "L"
                 textRow2 = getMoscowTime()        
         except Exception as err:
             textRow2 = "error"
@@ -206,7 +206,7 @@ def main():
             debugConsoleOutput("4")
             issue = True
         try:
-            symbolRow3 = "C"
+            symbolRow3 = "F"
             mempoolFees = getMempoolFeesString()
         except Exception as err:
             mempoolFees = "connection error"
