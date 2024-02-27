@@ -33,7 +33,7 @@ def main():
     Label(
         wri_small,
         labelRow1,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "J") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "N") + 4),
         setupTxt,
     )
 
@@ -41,13 +41,13 @@ def main():
         wri_iconsSmall,
         labelRow1 + 2,
         labelCol,
-        "J",
+        "N",
     )
     
     Label(
         wri_small,
         labelRow2,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "L") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "O") + 4),
         wifiTxt,
     )
     
@@ -55,13 +55,13 @@ def main():
         wri_iconsSmall,
         labelRow2,
         labelCol,
-        "L",
+        "O",
     )
     
     Label(
         wri_small,
         labelRow3,
-        int(labelCol + Writer.stringlen(wri_iconsSmall, "D") + 4),
+        int(labelCol + Writer.stringlen(wri_iconsSmall, "G") + 4),
         URITxt,
     )
     
@@ -69,7 +69,7 @@ def main():
         wri_iconsSmall,
         labelRow3 + 1,
         labelCol,
-        "D",
+        "G",
     )
 
     ssd.wait_until_ready()
