@@ -30,6 +30,7 @@ secretsSSID = ""
 secretsPASSWORD = ""
 dispVersion1 = "bh"  #bh = block height / hal = halving countdown / zap = Nostr zap counter
 dispVersion2 = "mts" #mts = moscow time satsymbol / mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
+dispVersion3 = "fees"    #fees = mempool fees / fp7 = JPY
 npub = ""
 
 def connectWIFI():
@@ -41,13 +42,15 @@ def connectWIFI():
     print(wifi.isconnected())
 
 
-def setSelectDisplay(displayVersion1, nPub, displayVersion2):
+def setSelectDisplay(displayVersion1, nPub, displayVersion2, displayVersion3):
     global dispVersion1
     global dispVersion2
+    global dispVersion3
     global npub
     dispVersion1 = displayVersion1
     npub = nPub
     dispVersion2 = displayVersion2
+    dispVersion3 = displayVersion3
 
 
 def setSecrets(SSID, PASSWORD):
@@ -57,7 +60,7 @@ def setSecrets(SSID, PASSWORD):
     secretsPASSWORD = PASSWORD
 
 
-def getPrice(currency): # change USD to EUR for price in euro
+def getPrice(currency):
     gc.collect()
     data = urequests.get("https://mempool.space/api/v1/prices")
     price = data.json()[currency]
@@ -74,6 +77,8 @@ def getPriceDisplay(currency):
     price_str = f"{getPrice(currency):,}"
     if currency == "EUR":
         price_str = price_str.replace(",", ".")
+    if currency == "CHF":
+        price_str = price_str.replace(",", " ")
     return price_str
 
 
@@ -196,6 +201,18 @@ def main():
             elif dispVersion2 == "fp2":
                 symbolRow2 = "B"
                 textRow2 = getPriceDisplay("EUR")
+            elif dispVersion2 == "fp3":
+                symbolRow2 = "C"
+                textRow2 = getPriceDisplay("GBP")
+            elif dispVersion2 == "fp4":
+                symbolRow2 = "B"
+                textRow2 = getPriceDisplay("CAD")
+            elif dispVersion2 == "fp5":
+                symbolRow2 = ""
+                textRow2 = "Fr. "+getPriceDisplay("CHF")
+            elif dispVersion2 == "fp6":
+                symbolRow2 = "B"
+                textRow2 = getPriceDisplay("AUD")  
             else:
                 symbolRow2 = "L"
                 textRow2 = getMoscowTime()        
@@ -206,8 +223,13 @@ def main():
             debugConsoleOutput("4")
             issue = True
         try:
-            symbolRow3 = "F"
-            mempoolFees = getMempoolFeesString()
+            if dispVersion3 == "fp7":
+                #symbolRow3 = "D"
+                #mempoolFees = getPrice("JPY")
+                print("fp7")
+            else:
+                symbolRow3 = "F"
+                mempoolFees = getMempoolFeesString()
         except Exception as err:
             mempoolFees = "connection error"
             symbolRow3 = ""
@@ -321,3 +343,4 @@ def main():
             label.value("")
             
         i = i + 1
+
