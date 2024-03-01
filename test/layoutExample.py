@@ -6,7 +6,7 @@ from gui.widgets.label import Label
 import time
 import gui.fonts.orangeClockIcons25 as iconsSmall
 import gui.fonts.orangeClockIcons35 as iconsLarge
-import gui.fonts.libreFranklinBold56 as large
+import gui.fonts.libreFranklinBold50 as large
 import gui.fonts.libreFranklinSemiBold29 as small
 
 
@@ -24,14 +24,12 @@ labelRow3 = 98
 displayLength = 296
 displayHeight = 128
 symbolRow1 = "A"
-symbolRow2 = "H"
-symbolRow3 = "C"
+symbolRow2 = "L"
+symbolRow3 = "F"
 blockHeight = "823376"  # A
-moscowTime = "2344"  # H
-mempoolFees = "L:89 M:99 H:109"  # C
-dollarSats = "100,000"  # K
-#moscowTime = dollarSats
-
+moscowTime = "1779"  # L
+mempoolFees = "L:89 M:99 H:109"  # F
+dollarSats = "100,000"  # E
 
 def main():
     refresh(ssd, True)
