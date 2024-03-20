@@ -50,7 +50,7 @@ class ExternalData:
 #
 # _extdata is a singleton dict holding ExternalData instances -- used internally
 #
-_extdata = None
+_extdata = {}
 
 
 #
@@ -58,12 +58,14 @@ _extdata = None
 #
 
 def initialize():
-    global _extdata
-    _extdata = {
+    keys = [x for x in _extdata.keys()]
+    for key in keys:
+        del _extdata[key]
+    _extdata.update({
         "prices": ExternalData("https://mempool.space/api/v1/prices", 300),
         "fees": ExternalData("https://mempool.space/api/v1/fees/recommended", 120),
         "height": ExternalData("https://mempool.space/api/blocks/tip/height", 180, json=False),
-    }
+    })
 
 def set_nostr_pubkey(npub):
     _extdata['zaps'] = ExternalData("https://api.nostr.band/v0/stats/profile/"+npub, 300)
