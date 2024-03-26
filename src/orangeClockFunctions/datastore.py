@@ -8,6 +8,7 @@ class ExternalData:
         self.ttl = ttl
         self.json = json
         self.updated = None
+        self.stale = None
         self.data = None
         self.refresh()
 
@@ -29,13 +30,16 @@ class ExternalData:
                 else:
                     data = response.text
                 self.updated = now
+                self.stale = False
             else:
                 print("status_code {}: requests.get({})".format(status_code, self.url))
                 data = self.data
+                self.stale = True
                 answer = False
         except Exception as err:
             print("Exception {}: requests.get({})".format(err, self.url))
             data = self.data
+            self.stale = True
             answer = False
         finally:
             try: response.close()
@@ -93,6 +97,9 @@ def refresh(raise_on_failure=False):
 #
 # functions for getting "raw" values from the _extdata singleton
 #
+
+def list_stale():
+    return [k for k,v in _extdata.items() if v.stale]
 
 def get_height():
     return int(_extdata["height"].data)

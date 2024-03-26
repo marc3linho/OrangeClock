@@ -25,6 +25,7 @@ labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "L"
 symbolRow3 = "F"
+warningIcon = "R"
 secretsSSID = ""
 secretsPASSWORD = ""
 dispVersion1 = "bh"  #bh = block height / hal = halving countdown / zap = Nostr zap counter
@@ -151,6 +152,8 @@ def main():
             refresh(ssd, True)
             time.sleep(5)
         try:
+            # alternatively: can avoid using raise_on_falure paramater
+            # and instead call datastore.list_stale() for a list of stale data.
             new_data = datastore.refresh(raise_on_failure=True)
             if new_data:
                 print("datastore.refresh() had updates: {}".format(",".join(new_data)))
@@ -206,7 +209,11 @@ def main():
             debugConsoleOutput("5")
             issue = True
 
-        labels = [
+        labels = []
+        if issue:
+            # warning-icon in upper-left corner to indicate error(s)
+            labels.append(Label(wri_iconsSmall, 0, 0, warningIcon))
+        labels += [
             Label(
                 wri_small,
                 labelRow1,
