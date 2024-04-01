@@ -32,7 +32,7 @@ class ExternalData:
                 self.updated = now
                 self.stale = False
             else:
-                print("status_code {}: requests.get({})".format(status_code, self.url))
+                print("status_code {}: requests.get({})".format(response.status_code, self.url))
                 data = self.data
                 self.stale = True
                 answer = False
