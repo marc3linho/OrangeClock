@@ -53,7 +53,7 @@ def composeClock(ssd, first, second, third, show_warning=False):
 
     # text and icon vertical position y-offsets for row1, row2, and row3
     text_y_offsets = (5, 44, 98)
-    icon_y_offsets = (7, 49, 99)
+    icon_y_offsets = (7, 44, 99)
 
     # spacing between text and icon for row1, row2, and row3
     spacings = (4, 0, 4)
