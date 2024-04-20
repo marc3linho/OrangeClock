@@ -1,7 +1,6 @@
 from color_setup import ssd
-from gui.core.writer import Writer
 from gui.core.nanogui import refresh
-from gui.widgets.label import Label
+from orangeClockFunctions.compositors import composeClock
 
 import network
 import time
@@ -14,15 +13,6 @@ import gui.fonts.libreFranklinSemiBold29 as small
 import gc
 import math
 
-wri_iconsLarge = Writer(ssd, iconsLarge, verbose=False)
-wri_iconsSmall = Writer(ssd, iconsSmall, verbose=False)
-wri_large = Writer(ssd, large, verbose=False)
-wri_small = Writer(ssd, small, verbose=False)
-
-rowMaxDisplay = 296
-labelRow1 = 5
-labelRow2 = 44
-labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "L"
 symbolRow3 = "F"
@@ -215,92 +205,12 @@ def main():
             debugConsoleOutput("5")
             issue = True
 
-        labels = [
-            Label(
-                wri_small,
-                labelRow1,
-                int(
-                    (
-                        rowMaxDisplay
-                        - Writer.stringlen(wri_small, blockHeight)
-                        + Writer.stringlen(wri_iconsSmall, symbolRow1)
-                        + 4  # spacing
-                    )
-                    / 2
-                ),
-                blockHeight,
-            ),
-            Label(
-                wri_iconsSmall,
-                labelRow1 + 2,  # center icon with text
-                int(
-                    (
-                        rowMaxDisplay
-                        - Writer.stringlen(wri_iconsSmall, symbolRow1)
-                        - Writer.stringlen(wri_small, blockHeight)
-                        - 4  # spacing
-                    )
-                    / 2
-                ),
-                symbolRow1,
-            ),
-            Label(
-                wri_large,
-                labelRow2,
-                int(
-                    (
-                        rowMaxDisplay
-                        - Writer.stringlen(wri_large, textRow2)
-                        + Writer.stringlen(wri_iconsLarge, symbolRow2)
-                        # + 2  # spacing
-                    )
-                    / 2
-                ),
-                textRow2,
-            ),
-            Label(
-                wri_iconsLarge,
-                labelRow2,  # + 10 for centered satsymbol
-                int(
-                    (
-                        rowMaxDisplay
-                        - Writer.stringlen(wri_iconsLarge, symbolRow2)
-                        - Writer.stringlen(wri_large, textRow2)
-                        # - 2  # spacing
-                    )
-                    / 2
-                ),
-                symbolRow2,
-            ),
-            Label(
-                wri_small,
-                labelRow3,
-                int(
-                    (
-                        rowMaxDisplay
-                        - Writer.stringlen(wri_small, mempoolFees)
-                        + Writer.stringlen(wri_iconsSmall, symbolRow3)
-                        + 4  # spacing
-                    )
-                    / 2
-                ),
-                mempoolFees,
-            ),
-            Label(
-                wri_iconsSmall,
-                labelRow3 + 1,  # center icon with text
-                int(
-                    (
-                        rowMaxDisplay
-                        - Writer.stringlen(wri_iconsSmall, symbolRow3)
-                        - Writer.stringlen(wri_small, mempoolFees)
-                        - 4  # spacing
-                    )
-                    / 2
-                ),
-                symbolRow3,
-            )
-        ]
+        labels = composeClock(
+            ssd,
+            (blockHeight, symbolRow1),
+            (textRow2, symbolRow2),
+            (mempoolFees, symbolRow3)
+        )
 
         refresh(ssd, False)
         ssd.wait_until_ready()
