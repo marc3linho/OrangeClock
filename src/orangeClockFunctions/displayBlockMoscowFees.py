@@ -94,16 +94,37 @@ def getMempoolFees():
 
 
 def getMempoolFeesString():
+    def build_fees_string(mempoolFees, labels=True, halfHourFee=True):
+        key_label_tuples = (
+            ("hourFee", "L"),
+            ("halfHourFee","M"),
+            ("fastestFee","H")
+        )
+        fees = []
+        for key, label in key_label_tuples:
+            if key == "halfHourFee" and not halfHourFee:
+                continue
+            if labels:
+                fees.append(label + ":" + str(mempoolFees[key]))
+            else:
+                fees.append(str(mempoolFees[key]))
+        return " ".join(fees)
+
     mempoolFees = getMempoolFees()
-    mempoolFeesString = (
-        "L:"
-        + str(mempoolFees["hourFee"])
-        + " M:"
-        + str(mempoolFees["halfHourFee"])
-        + " H:"
-        + str(mempoolFees["fastestFee"])
-    )
-    return mempoolFeesString
+    max_string_length = 16
+
+    answer = build_fees_string(mempoolFees)
+    if len(answer) > max_string_length:
+        # too big, try w/o "L:", "M:", and "H:" labels
+        answer = build_fees_string(mempoolFees, labels=False)
+    if len(answer) > max_string_length:
+        # still too big, try w/o medium-priority fees
+        answer = build_fees_string(mempoolFees, halfHourFee=False)
+    if len(answer) > max_string_length:
+        # still too big, try w/o labels and w/o medium-priority fees
+        answer = build_fees_string(mempoolFees, labels=False, halfHourFee=False)
+
+    return answer
 
 
 def getNostrZapCount(nPub):
