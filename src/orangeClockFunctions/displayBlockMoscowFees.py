@@ -26,6 +26,7 @@ labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "L"
 symbolRow3 = "F"
+spaceRow3 = 4
 warningIcon = "R"
 secretsSSID = ""
 secretsPASSWORD = ""
@@ -75,16 +76,40 @@ def getLastBlock():
 
 
 def getMempoolFeesString():
+    def build_fees_string(mempoolFees, labels=True, halfHourFee=True):
+        key_label_tuples = (
+            ("hourFee", "L"),
+            ("halfHourFee","M"),
+            ("fastestFee","H")
+        )
+        fees = []
+        for key, label in key_label_tuples:
+            if key == "halfHourFee" and not halfHourFee:
+                continue
+            if labels:
+                fees.append(label + ":" + str(mempoolFees[key]))
+            else:
+                fees.append(str(mempoolFees[key]))
+        separator = " - " if len(fees) == 2 else "  "
+        return separator.join(fees)
+
     mempoolFees = datastore.get_fees_dict()
-    mempoolFeesString = (
-        "L:"
-        + str(mempoolFees["hourFee"])
-        + " M:"
-        + str(mempoolFees["halfHourFee"])
-        + " H:"
-        + str(mempoolFees["fastestFee"])
-    )
-    return mempoolFeesString
+
+    # width_of_screen - fees_icon - fees_space
+    max_width = rowMaxDisplay - wri_iconsSmall.stringlen(symbolRow3) - spaceRow3
+
+    answer = build_fees_string(mempoolFees)
+    if wri_small.stringlen(answer) > max_width:
+        # too big, try w/o medium-priority fees
+        answer = build_fees_string(mempoolFees, halfHourFee=False)
+    if wri_small.stringlen(answer) > max_width:
+        # too big, try w/o "L:", "M:", and "H:" labels
+        answer = build_fees_string(mempoolFees, labels=False)
+    if wri_small.stringlen(answer) > max_width:
+        # too big, try w/o labels and w/o medium-priority fees
+        answer = build_fees_string(mempoolFees, labels=False, halfHourFee=False)
+
+    return answer
 
 
 def getNostrZapCount():
@@ -283,7 +308,7 @@ def main():
                         rowMaxDisplay
                         - Writer.stringlen(wri_small, mempoolFees)
                         + Writer.stringlen(wri_iconsSmall, symbolRow3)
-                        + 4  # spacing
+                        + spaceRow3  # spacing
                     )
                     / 2
                 ),
@@ -297,7 +322,7 @@ def main():
                         rowMaxDisplay
                         - Writer.stringlen(wri_iconsSmall, symbolRow3)
                         - Writer.stringlen(wri_small, mempoolFees)
-                        - 4  # spacing
+                        - spaceRow3  # spacing
                     )
                     / 2
                 ),
