@@ -2,11 +2,11 @@ from color_setup import ssd
 from gui.core.writer import Writer
 from gui.core.nanogui import refresh
 from gui.widgets.label import Label
+from orangeClockFunctions.logging import log_exception
+from orangeClockFunctions import datastore
 
 import network
 import time
-import urequests
-import json
 import gui.fonts.orangeClockIcons25 as iconsSmall
 import gui.fonts.orangeClockIcons35 as iconsLarge
 import gui.fonts.libreFranklinBold50 as large
@@ -26,11 +26,14 @@ labelRow3 = 98
 symbolRow1 = "A"
 symbolRow2 = "L"
 symbolRow3 = "F"
+spaceRow3 = 4
+warningIcon = "R"
 secretsSSID = ""
 secretsPASSWORD = ""
 dispVersion1 = "bh"  #bh = block height / hal = halving countdown / zap = Nostr zap counter
 dispVersion2 = "mts" #mts = moscow time satsymbol / mts2 = moscow time satusd icon / mt = without satsymbol / fp1 = fiat price [$] / fp2 = fiat price [€]
 npub = ""
+
 
 def connectWIFI():
     global wifi
@@ -57,65 +60,64 @@ def setSecrets(SSID, PASSWORD):
     secretsPASSWORD = PASSWORD
 
 
-def getPrice(currency): # change USD to EUR for price in euro
-    gc.collect()
-    data = urequests.get("https://mempool.space/api/v1/prices")
-    price = data.json()[currency]
-    data.close()
-    return price
-
-
 def getMoscowTime():
-    moscowTime = str(int(100000000 / float(getPrice("USD"))))
-    return moscowTime
+    return str(int(100000000 / float(datastore.get_price("USD"))))
 
 
 def getPriceDisplay(currency):
-    price_str = f"{getPrice(currency):,}"
+    price_str = f"{datastore.get_price(currency):,}"
     if currency == "EUR":
         price_str = price_str.replace(",", ".")
     return price_str
 
 
 def getLastBlock():
-    gc.collect()
-    data = urequests.get("https://mempool.space/api/blocks/tip/height")
-    block = data.text
-    data.close()
-    return block
-
-
-def getMempoolFees():
-    gc.collect()
-    data = urequests.get("https://mempool.space/api/v1/fees/recommended")
-    jsonData = data.json()
-    data.close()
-    return jsonData
+    return str(datastore.get_height())
 
 
 def getMempoolFeesString():
-    mempoolFees = getMempoolFees()
-    mempoolFeesString = (
-        "L:"
-        + str(mempoolFees["hourFee"])
-        + " M:"
-        + str(mempoolFees["halfHourFee"])
-        + " H:"
-        + str(mempoolFees["fastestFee"])
-    )
-    return mempoolFeesString
+    def build_fees_string(mempoolFees, labels=True, halfHourFee=True):
+        key_label_tuples = (
+            ("hourFee", "L"),
+            ("halfHourFee","M"),
+            ("fastestFee","H")
+        )
+        fees = []
+        for key, label in key_label_tuples:
+            if key == "halfHourFee" and not halfHourFee:
+                continue
+            if labels:
+                fees.append(label + ":" + str(mempoolFees[key]))
+            else:
+                fees.append(str(mempoolFees[key]))
+        separator = " - " if len(fees) == 2 else "  "
+        return separator.join(fees)
+
+    mempoolFees = datastore.get_fees_dict()
+
+    # width_of_screen - fees_icon - fees_space
+    max_width = rowMaxDisplay - wri_iconsSmall.stringlen(symbolRow3) - spaceRow3
+
+    answer = build_fees_string(mempoolFees)
+    if wri_small.stringlen(answer) > max_width:
+        # too big, try w/o medium-priority fees
+        answer = build_fees_string(mempoolFees, halfHourFee=False)
+    if wri_small.stringlen(answer) > max_width:
+        # too big, try w/o "L:", "M:", and "H:" labels
+        answer = build_fees_string(mempoolFees, labels=False)
+    if wri_small.stringlen(answer) > max_width:
+        # too big, try w/o labels and w/o medium-priority fees
+        answer = build_fees_string(mempoolFees, labels=False, halfHourFee=False)
+
+    return answer
 
 
-def getNostrZapCount(nPub):
-    gc.collect()
-    data = urequests.get("https://api.nostr.band/v0/stats/profile/"+nPub)
-    jsonData = str(data.json()["stats"][str(data.json())[12:76]]["zaps_received"]["count"])
-    data.close()
-    return jsonData
+def getNostrZapCount():
+    return str(datastore.get_nostr_zap_count())
 
 
 def getNextHalving():
-    return str(210000 * (math.trunc(int(getLastBlock()) / 210000) + 1) - int(getLastBlock()))
+    return str(210000 - datastore.get_height() % 210000)
 
 
 def displayInit():
@@ -131,10 +133,13 @@ def displayInit():
 
 
 def debugConsoleOutput(id):
-    print("===============debug id= " + id + "===============")
-    print("memory use: ", gc.mem_alloc() / 1024, "KiB")
+    mem_alloc = gc.mem_alloc()
+    print("=============== debug id=" + id + " ===============")
+    print("memory used: ", mem_alloc / 1024, "KiB")
     print("memory free: ", gc.mem_free() / 1024, "KiB")
-    print("===============end debug===============")
+    gc.collect()
+    print("gc.collect() freed additional:", (mem_alloc - gc.mem_alloc()) / 1024, "KiB")
+    print("=============== end debug ===============")
 
 
 def main():
@@ -150,6 +155,11 @@ def main():
     i = 1
     connectWIFI()
     displayInit()
+
+    datastore.initialize()
+    if npub:
+        datastore.set_nostr_pubkey(npub)
+
     while True:
         debugConsoleOutput("2")
         if issue:
@@ -168,9 +178,20 @@ def main():
             refresh(ssd, True)
             time.sleep(5)
         try:
+            # alternatively: can avoid using raise_on_falure paramater
+            # and instead call datastore.list_stale() for a list of stale data.
+            new_data = datastore.refresh(raise_on_failure=True)
+            if new_data:
+                print("datastore.refresh() had updates: {}".format(",".join(new_data)))
+        except Exception as err:
+            log_exception(err)
+            debugConsoleOutput("datastore.refresh() failure")
+            print(err)
+            issue = True
+        try:
             if dispVersion1 == "zap":
                 symbolRow1 = "I"
-                blockHeight = getNostrZapCount(npub)
+                blockHeight = getNostrZapCount()
             elif dispVersion1 == "hal":
                 symbolRow1 = "H"
                 blockHeight = getNextHalving()
@@ -178,6 +199,7 @@ def main():
                 symbolRow1 = "A"
                 blockHeight = getLastBlock()    
         except Exception as err:
+            log_exception(err)
             blockHeight = "connection error"
             symbolRow1 = ""
             print("Block: Handling run-time error:", err)
@@ -200,6 +222,7 @@ def main():
                 symbolRow2 = "L"
                 textRow2 = getMoscowTime()        
         except Exception as err:
+            log_exception(err)
             textRow2 = "error"
             symbolRow2 = ""
             print("Moscow: Handling run-time error:", err)
@@ -209,13 +232,18 @@ def main():
             symbolRow3 = "F"
             mempoolFees = getMempoolFeesString()
         except Exception as err:
+            log_exception(err)
             mempoolFees = "connection error"
             symbolRow3 = ""
             print("Fees: Handling run-time error:", err)
             debugConsoleOutput("5")
             issue = True
 
-        labels = [
+        labels = []
+        if issue:
+            # warning-icon in upper-left corner to indicate error(s)
+            labels.append(Label(wri_iconsSmall, 0, 0, warningIcon))
+        labels += [
             Label(
                 wri_small,
                 labelRow1,
@@ -280,7 +308,7 @@ def main():
                         rowMaxDisplay
                         - Writer.stringlen(wri_small, mempoolFees)
                         + Writer.stringlen(wri_iconsSmall, symbolRow3)
-                        + 4  # spacing
+                        + spaceRow3  # spacing
                     )
                     / 2
                 ),
@@ -294,7 +322,7 @@ def main():
                         rowMaxDisplay
                         - Writer.stringlen(wri_iconsSmall, symbolRow3)
                         - Writer.stringlen(wri_small, mempoolFees)
-                        - 4  # spacing
+                        - spaceRow3  # spacing
                     )
                     / 2
                 ),
@@ -307,7 +335,6 @@ def main():
         ssd.sleep()
         if not issue:
             time.sleep(600)  # 600 normal
-
         else:
             wifi.disconnect()
             debugConsoleOutput("6")
