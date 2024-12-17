@@ -4,17 +4,28 @@ from orangeClockFunctions.logging import log_exception
 
 
 class ExternalData:
-    def __init__(self, url, ttl=300, json=True):
+    def __init__(self, url, ttl=300, ignore_ssl_errors=False, json=True):
         self.url = url
         self.ttl = ttl
         self.json = json
         self.updated = None
         self.stale = None
         self.data = None
+        self.ignore_ssl_errors = ignore_ssl_errors
         self.refresh()
 
     def __str__(self):
         return 'ExternalData("{}")'.format(self.url)
+
+    def get_response(self):
+        try:
+            response = requests.get(self.url)
+        except requests.exceptions.SSLError as ssl_error:
+            if self.ignore_ssl_errors:
+                response = requests.get(self.url, verify=False)
+            else:
+                raise ssl_error
+        return response
 
     def refresh(self):
         now = time.time()
@@ -24,7 +35,7 @@ class ExternalData:
             return answer
 
         try:
-            response = requests.get(self.url)
+            response = self.get_response()
             if response.status_code == 200:
                 if self.json:
                     data = response.json()
@@ -63,15 +74,25 @@ _extdata = {}
 # functions for updating the _extdata singleton
 #
 
-def initialize():
+def init_mempool_data(mempool_api, ignore_ssl_errors):
+    _extdata.update({
+        "prices": ExternalData(f"{mempool_api}/api/v1/prices", 300, ignore_ssl_errors),
+        "fees": ExternalData(f"{mempool_api}/api/v1/fees/recommended", 120, ignore_ssl_errors),
+        "height": ExternalData(f"{mempool_api}/api/blocks/tip/height", 180, ignore_ssl_errors, json=False)
+    })
+
+
+def initialize(mempool_api):
     keys = [x for x in _extdata.keys()]
     for key in keys:
         del _extdata[key]
-    _extdata.update({
-        "prices": ExternalData("https://mempool.space/api/v1/prices", 300),
-        "fees": ExternalData("https://mempool.space/api/v1/fees/recommended", 120),
-        "height": ExternalData("https://mempool.space/api/blocks/tip/height", 180, json=False),
-    })
+    if not mempool_api:
+        print("get info from mempool.space ...")
+        init_mempool_data("https://mempool.space", False)
+    else:
+        print("get info from self-hosted mempool ...")
+        init_mempool_data(mempool_api, True)
+
 
 def set_nostr_pubkey(npub):
     _extdata['zaps'] = ExternalData("https://api.nostr.band/v0/stats/profile/"+npub, 300)

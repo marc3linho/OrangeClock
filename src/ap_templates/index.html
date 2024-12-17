@@ -27,13 +27,18 @@
         <div>
             <h2>Network</h2>
             <div>
-                <label for="ssid">SSID</label>
+                <label for="ssid">SSID*</label>
                 <input type="text" id="ssid" name="ssid" placeholder="SSID">
             </div>
             <div style="margin-top:0.5rem;">
-                <label for="password">Password</label>
+                <label for="password">Password*</label>
                 <input type="password" id="password" name="password" placeholder="Password">
             </div>
+            <div style="margin-top:0.5rem;">
+                <label for="mempool" title="setup with your self-hosted mempool, leave empty to use mempool.space">mempool</label>
+                <input type="text" id="mempool" name="mempool" placeholder="https://mempool.space">
+            </div>
+            <label>*required</label>
         </div>
         <hr />
         <div>
@@ -41,7 +46,7 @@
             <h3>Line 1</h3>
             <div>
                 <div>
-                    <input type="radio" id="bh" name="line1" value="bh" checked="checked">
+                    <input type="radio" id="bh" name="line1" value="bh" checked>
                     <label for="mt">Block Time</label>
                 </div>
                 <div>
@@ -57,7 +62,7 @@
             <h3>Line 2</h3>
             <div>
                 <div>
-                    <input type="radio" id="mts" name="line2" value="mts" checked="checked">
+                    <input type="radio" id="mts" name="line2" value="mts" checked>
                     <label for=mts">Moscow Time (satsymbol icon)</label>
                 </div>
                 <div>
@@ -81,7 +86,7 @@
             <h3>Line 3</h3>
             <div>
                 <div>
-                    <input type="radio" id="fees" name="line3" value="fees" checked="checked">
+                    <input type="radio" id="fees" name="line3" value="fees" checked>
                     <label for="fees">Transaction Fees</label>
                 </div>
             </div>

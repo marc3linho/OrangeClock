@@ -41,7 +41,8 @@
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/wifi_1.png" width="50%" >
 
-5. Set your wifi credentials and save them, the OrangeClock will reboot automatically and connect to your network 
+5. Set your wifi credentials and save them, the OrangeClock will reboot automatically and connect to your network.
+If you want to use your self-hosted mempool, you can enter the url. Leave it empty to use mempool.space 
 
 <img src="https://raw.githubusercontent.com/marc3linho/OrangeClock/main/images/readme/wifi_2.jpg" width="50%" >
 
@@ -52,6 +53,7 @@ If you have any questions, problems or suggestions please feel free to contact m
 ## Known bugs and strange effects
 
 * The wifi credentials are stored in plain text on the Pico, so the OrangeClock should be connected to an isolated network or guest network.
+When you want to use your self-hosted mempool make sure that the url is reachable from the network
 
 * Strange effect: The display flickers every 12 hours (The reason is a full refresh).
 

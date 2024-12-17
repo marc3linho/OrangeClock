@@ -60,7 +60,7 @@ def setup_mode():
 
 def application_mode():
     print("Entering application mode.")
-    orangeClock.setSecrets(wifi_credentials["ssid"], wifi_credentials["password"])
+    orangeClock.setSecrets(wifi_credentials["ssid"], wifi_credentials["password"], wifi_credentials["mempool"])
     orangeClock.setSelectDisplay(wifi_credentials["line1"], wifi_credentials["npub"], wifi_credentials["line2"])
     orangeClock.main()
 

@@ -53,11 +53,13 @@ def setSelectDisplay(displayVersion1, nPub, displayVersion2):
     dispVersion2 = displayVersion2
 
 
-def setSecrets(SSID, PASSWORD):
+def setSecrets(SSID, PASSWORD, mempool_url):
     global secretsSSID
     global secretsPASSWORD
+    global mempool
     secretsSSID = SSID
     secretsPASSWORD = PASSWORD
+    mempool = mempool_url
 
 
 def getMoscowTime():
@@ -156,7 +158,7 @@ def main():
     connectWIFI()
     displayInit()
 
-    datastore.initialize()
+    datastore.initialize(mempool)
     if npub:
         datastore.set_nostr_pubkey(npub)
 
