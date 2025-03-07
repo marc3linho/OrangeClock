@@ -62,6 +62,8 @@ def application_mode():
     print("Entering application mode.")
     orangeClock.setSecrets(wifi_credentials["ssid"], wifi_credentials["password"])
     orangeClock.setSelectDisplay(wifi_credentials["line1"], wifi_credentials["npub"], wifi_credentials["line2"])
+    if not wifi_credentials["save"]:
+        os.remove(WIFI_FILE)
     orangeClock.main()
 
     def app_index(request):
@@ -86,18 +88,18 @@ try:
     # File was found, attempt to connect to wifi...
     with open(WIFI_FILE) as f:
         wifi_credentials = json.load(f)
-        ip_address = connect_to_wifi(wifi_credentials["ssid"], wifi_credentials["password"])
+    ip_address = connect_to_wifi(wifi_credentials["ssid"], wifi_credentials["password"])
 
-        if not is_connected_to_wifi():
-            # Bad configuration, delete the credentials file, reboot
-            # into setup mode to get new credentials from the user.
-            print("Bad wifi connection!")
-            print(wifi_credentials)
-            os.remove(WIFI_FILE)
-            machine_reset()
+    if not is_connected_to_wifi():
+        # Bad configuration, delete the credentials file, reboot
+        # into setup mode to get new credentials from the user.
+        print("Bad wifi connection!")
+        print(wifi_credentials)
+        os.remove(WIFI_FILE)
+        machine_reset()
 
-        print(f"Connected to wifi, IP address {ip_address}")
-        application_mode()
+    print(f"Connected to wifi, IP address {ip_address}")
+    application_mode()
 
 except Exception as err:
     # Either no wifi configuration file found, or something went wrong, 
